@@ -6,19 +6,16 @@
 package subastas;
 
 import java.io.IOException;
-import java.net.Socket;
 
 /**
  *
  * @author jose pablo
  */
-public class Oferente implements IServidor{
+public class Oferente extends IServidor{
     private String idOferente;
-    private Socket socket;
 
-    public Oferente(String idOferente, Socket socket) {
+    public Oferente(String idOferente) {
         this.idOferente = idOferente;
-        this.socket = socket;
     }
 
     public String getIdOferente() {
@@ -29,44 +26,21 @@ public class Oferente implements IServidor{
         this.idOferente = idOferente;
     }
 
-    public Socket getSocket() {
-        return socket;
-    }
-
-    public void setSocket(Socket socket) {
-        this.socket = socket;
-    }
-
     @Override
-    public void iniciarServidor() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void procesarConexion() throws IOException, ClassNotFoundException{
+        Mensaje mensaje = leerMensaje();
+        
+        if(null == mensaje.getTipo()) {
+            System.out.println("No se reconocio el tipo de mensaje");
+        }
+        else switch (mensaje.getTipo()) {
+            case OFERTA:
+                enviarMensaje( mensaje);
+                break;
+            default:
+                System.out.println("No se reconocio el tipo de mensaje");
+                break;
+        }
     }
-
-    @Override
-    public void esperarConexion() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void obtenerFlujos() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void cerrarConexion() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void terminarServidor() throws IOException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void procesarConexion() throws IOException, ClassNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    
     
 }

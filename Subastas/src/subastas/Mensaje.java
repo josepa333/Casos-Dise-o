@@ -12,7 +12,7 @@ public class Mensaje  implements Serializable {
     
     // Constructor
     public Mensaje() {
-        this.tipo = TipoMensaje.UNKNOW;
+        this.tipo = TipoMensaje.UNKNOWN;
     }
     /**
      * Constructor
