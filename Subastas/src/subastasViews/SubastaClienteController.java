@@ -15,10 +15,12 @@ public class SubastaClienteController implements ActionListener{
     private SubastaCliente vista;
     private Oferente modelo;
     
-    public SubastaClienteController() {
+    public SubastaClienteController(String idCliente, String idSubastador) {
         vista = new SubastaCliente();
         vista.show();
         vista.ofertarButton.addActionListener(this);
+        modelo = new Oferente(idCliente, this);
+        vista.feedArea.setText(modelo.unirseSubasta( idSubastador ));
     }
     
     @Override
@@ -30,9 +32,8 @@ public class SubastaClienteController implements ActionListener{
                break;
        }
     }
-    
-    private void enviarOferta(){
-        
+
+    public SubastaCliente getVista() {
+        return vista;
     }
-    
 }

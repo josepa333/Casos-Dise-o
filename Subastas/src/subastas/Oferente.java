@@ -8,6 +8,8 @@ package subastas;
 import com.thoughtworks.xstream.XStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import subastasViews.SubastaClienteController;
 
 /**
  *
@@ -20,12 +22,16 @@ public class Oferente extends IServidor{ //Tener un arreglo de ControlerSubasta,
     private String idOferente;
     private Conexion miConexion; 
 
+    private String idSubastador;
+    private SubastaClienteController controller;
+    
     static XStream xstream;
     static String xml;
     
-    public Oferente(String idOferente) {
+    public Oferente(String idOferente, SubastaClienteController controller) {
         this.idOferente = idOferente;
         miConexion = miConexion = new Conexion("172.19.51.112", 6565); //TODO definir server
+        this.controller = controller;
     }
 
     public String getIdOferente() {
@@ -45,20 +51,49 @@ public class Oferente extends IServidor{ //Tener un arreglo de ControlerSubasta,
         }
         else switch (mensaje.getTipo()) {
             case ACEPTAROFERTA:
-                ofertaAceptada(mensaje);
+                ofertaAceptada(" aceptada", mensaje);
                 break;
-            
+            case RECHAZAROFERTA:
+                ofertaAceptada(" rechazada",mensaje);
+                break;
+            case SUBASTAFINALIZADA:
+                subastaFinalizada("La subasta ha finalizado", mensaje);  //Donde esta el feed?
+                break;
+            case SUBASTACANCELADA:
+                subastaFinalizada("La subasta ha sido cancelada", mensaje); //Donde esta el feed?
+                break;
             default:
-                System.out.println("No se reconocio el tipo de mensaje");
+                System.out.println("No se reconocio el tipo de mensaje"); 
                 break;
         }
     }
     
-    private void ofertaAceptada(Mensaje mensaje){
-        ///TODO
+    private void ofertaAceptada(String condicion, Mensaje mensaje){
+        controller.getVista().feedArea.setText("La oferta ha sido " + condicion);
     }
     
-    private ArrayList<Subastador> cargarSubastadores(){
+    private void subastaFinalizada(String condicion, Mensaje mensaje){
+        controller.getVista().feedArea.setText(condicion);
+    }
+    
+    public String unirseSubasta(String idSubastador){
+        Mensaje miMensaje = new Mensaje(TipoMensaje.UNIRSESUBASTA, idOferente ,idSubastador);
+        Mensaje resultado = null;
+        this.idSubastador = idSubastador;
+        try {
+            miConexion.abrirConexion();
+            miConexion.obtenerFlujos();
+            miConexion.enviarMensaje(miMensaje);
+            resultado = miConexion.recibirMensaje();
+            miConexion.cerrarConexion();
+        }
+        catch (IOException e) {
+            System.out.println(e);
+        }
+        return resultado.getCuerpo();
+    }
+    
+    public ArrayList<Subastador> cargarSubastadores(){
         Mensaje miMensaje = new Mensaje(TipoMensaje.CONSULTASUBASTA, idOferente ,"");
         Mensaje resultado = null;
         try {
@@ -71,7 +106,6 @@ public class Oferente extends IServidor{ //Tener un arreglo de ControlerSubasta,
         catch (IOException e) {
             System.out.println(e);
         }
-        
         return obtenerSubastadoresDeXml(resultado);
     }
     
@@ -85,6 +119,16 @@ public class Oferente extends IServidor{ //Tener un arreglo de ControlerSubasta,
     }
     
     public void enviarOferta(String valorOferta){
-        
+        Mensaje miMensaje = new Mensaje(TipoMensaje.OFERTA, idOferente ,
+        xstream.toXML(new ArrayList<>(Arrays.asList(valorOferta, idSubastador))));
+        try {
+            miConexion.abrirConexion();
+            miConexion.obtenerFlujos();
+            miConexion.enviarMensaje(miMensaje);
+            miConexion.cerrarConexion();
+        }
+        catch (IOException e) {
+            System.out.println(e);
+        }
     }
 }

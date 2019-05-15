@@ -5,6 +5,8 @@
  */
 package subastas;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -19,12 +21,17 @@ public class Subasta {
     private String status;
     private String feed;
 
-    public Subasta(String finalProgramado, Producto producto) {
-        //this.inicio = inicio;
-        this.finalProgramado = new Date();
+    public Subasta(String finalProgramado, Producto producto){
+        this.inicio = new Date();
         this.producto = producto;
         this.status = "activa";
         this.feed = "";
+        try{
+        this.finalProgramado = new SimpleDateFormat("dd/MM/yyyy").parse(finalProgramado);
+        }
+        catch(ParseException e){
+            System.out.println("La fecha no funciona :(");
+        }
     }
     
     public void pujar(int nuevoPrecio){

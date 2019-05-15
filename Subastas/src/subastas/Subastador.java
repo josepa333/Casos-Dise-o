@@ -91,6 +91,10 @@ public class Subastador extends IServidor{ //TODO Hacerlo observer
             case CONSULTASUBASTA:
                 enviarMensaje(informacionSubasta());
                 break;
+            case UNIRSESUBASTA:
+                enviarMensaje( new Mensaje(TipoMensaje.UNIRSESUBASTA, idSubastador, 
+                        subasta.addToFeed( "El usuario " + mensaje.getUsuario() + " se ha unido.")));
+                break;
             default:
                 System.out.println("No se reconocio el tipo de mensaje");
                 break;

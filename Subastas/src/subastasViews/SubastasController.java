@@ -18,6 +18,7 @@ public class SubastasController implements MouseListener{
     private ListaSubastas vista;
     private String idCliente;
     Tabla tablaBase = new Tabla();
+    private ArrayList<Subastador> subastadores;
     
     public SubastasController(String idCliente) {
         this.idCliente = idCliente;
@@ -30,9 +31,9 @@ public class SubastasController implements MouseListener{
     }
     
     private void cargarTabla(){
-        Oferente tmpOferente = new Oferente("Temporal");
-        ArrayList<Subastador> datos = new ArrayList();
-        tablaBase.ver_tabla(vista.TablaSubastas, datos);
+        Oferente tmpOferente = new Oferente("Temporal", null);
+        subastadores = tmpOferente.cargarSubastadores();
+        tablaBase.ver_tabla(vista.TablaSubastas, subastadores);
     }
     
     @Override
@@ -53,8 +54,8 @@ public class SubastasController implements MouseListener{
                 JButton boton = (JButton) value;
                 switch (column) {
                     case 4:
-                        System.out.println("Print jeje"); 
-                         
+                        System.out.println("Print heehee"); 
+                         SubastaClienteController controler = new SubastaClienteController(idCliente,subastadores.get(row).getIdSubastador() );
                         break; 
                 }
                 System.out.println(row);
