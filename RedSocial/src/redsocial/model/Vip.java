@@ -16,7 +16,13 @@ public class Vip extends IServidor{
     private ArrayList<MensajeVip> mensajes;
     private ArrayList<Seguidor> seguidores;
     private String id;
-
+    
+    public Vip(String id){
+        this.id = id;
+        this.seguidores = new ArrayList();
+        this.mensajes = new ArrayList();
+    }
+    
     public ArrayList<Seguidor> getSeguidores() {
         return seguidores;
     }
@@ -37,8 +43,8 @@ public class Vip extends IServidor{
         this.mensajes = mensajes;
     }
 
-    public void addMensaje(MensajeVip mensaje){
-        this.mensajes.add(mensaje);
+    public void addMensaje(String mensaje){
+        this.mensajes.add(new MensajeVip(mensaje,this.mensajes.size()));
     }
     
     public String getId() {

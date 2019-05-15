@@ -38,10 +38,11 @@ public class TablaCelebridad {
             fila[0] = "";
             fila[1] = "";
             fila[2] = botonSeguir;
-            fila[4] = botonVerMensajes;
+            fila[3] = botonVerMensajes;
             tablaPredeterminada.addRow(fila);
         }
         pTabla.setModel(tablaPredeterminada);
         pTabla.setRowHeight(30);
+        pTabla.repaint();
     }
 }
