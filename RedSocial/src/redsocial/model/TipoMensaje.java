@@ -1,0 +1,10 @@
+package redsocial.model;
+
+/**
+ *
+ * @author lpsotoHP
+ */
+public enum TipoMensaje {
+    UNKNOWN, SEGUIRVIP, DEJARSEGUIRVIP, LIKEMENSAJE, DISLIKEMENSAJE, DARSEBAJA, 
+    POSTEARMENSAJE, NOTIFICACIONNIVEL, NOTIFICACIONMENSAJE
+} 
