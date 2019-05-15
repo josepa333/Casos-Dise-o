@@ -11,7 +11,10 @@ import java.io.IOException;
  *
  * @author jose pablo
  */
-public class Oferente extends IServidor{
+public class Oferente extends IServidor{ //Tener un arreglo de ControlerSubasta, que tiene al modelo y a la vista
+    //recorro la madre buscando la que calze con ese id y le mando la vara.
+    
+    
     private String idOferente;
 
     public Oferente(String idOferente) {
@@ -34,8 +37,8 @@ public class Oferente extends IServidor{
             System.out.println("No se reconocio el tipo de mensaje");
         }
         else switch (mensaje.getTipo()) {
-            case OFERTA:
-                enviarMensaje( mensaje);
+            case ACEPTAROFERTA:
+                enviarMensaje(mensaje);
                 break;
             default:
                 System.out.println("No se reconocio el tipo de mensaje");

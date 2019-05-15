@@ -11,9 +11,8 @@ package subastasViews;
  */
 public class SubastaSubastador extends javax.swing.JFrame {
 
-    /**
-     * Creates new form SubastaSubastador
-     */
+
+    
     public SubastaSubastador() {
         initComponents();
     }
@@ -28,20 +27,17 @@ public class SubastaSubastador extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        feedTextArea = new javax.swing.JTextArea();
+        finalizarSubastaButton = new javax.swing.JButton();
         cancelarSubastaButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        feedTextArea.setColumns(20);
+        feedTextArea.setRows(5);
+        jScrollPane1.setViewportView(feedTextArea);
 
-        jButton1.setText("Aceptar oferta");
-
-        jButton2.setText("Finalizar subasta");
+        finalizarSubastaButton.setText("Finalizar subasta");
 
         cancelarSubastaButton.setText("Cancelar subasta");
 
@@ -52,14 +48,11 @@ public class SubastaSubastador extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cancelarSubastaButton)
-                        .addGap(0, 16, Short.MAX_VALUE)))
+                        .addComponent(finalizarSubastaButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(cancelarSubastaButton)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -69,8 +62,7 @@ public class SubastaSubastador extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
+                    .addComponent(finalizarSubastaButton)
                     .addComponent(cancelarSubastaButton))
                 .addContainerGap(64, Short.MAX_VALUE))
         );
@@ -115,9 +107,8 @@ public class SubastaSubastador extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancelarSubastaButton;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    public javax.swing.JTextArea feedTextArea;
+    private javax.swing.JButton finalizarSubastaButton;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,17 +5,17 @@
  */
 package subastas;
 
+import subastasViews.InicioSesion;
+
+
 /**
  *
  * @author jose pablo
  */
 public class Subastas {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
+    public static void main(String[] argv){
+        InicioSesion ventanaPrincipal = new InicioSesion();
+        ventanaPrincipal.show();
     }
-    
 }

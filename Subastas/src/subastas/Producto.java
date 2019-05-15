@@ -15,10 +15,10 @@ public class Producto {
     private double precioInicial;
     private double precioFinal;
 
-    public Producto(String nombre, double precioInicial, double precioFinal) {
+    public Producto(String nombre, String precioInicial) {
         this.nombre = nombre;
-        this.precioInicial = precioInicial;
-        this.precioFinal = precioFinal;
+        this.precioInicial = Double.parseDouble(precioInicial);
+        this.precioFinal = 0;
     }
 
     public String getNombre() {

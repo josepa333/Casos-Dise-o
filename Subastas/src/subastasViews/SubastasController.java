@@ -7,9 +7,9 @@ package subastasViews;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.swing.ImageIcon;
+import java.util.ArrayList;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
+import subastas.Subastador;
 
 /**
  *
@@ -19,14 +19,25 @@ public class SubastasController implements MouseListener{
 
     
     private ListaSubastas vista;
+    private String idCliente;
+    Tabla tablaBase = new Tabla();
     
     
-    public SubastasController() {
+    public SubastasController(String idCliente) {
+        this.idCliente = idCliente;
         vista = new ListaSubastas();
         vista.setVisible(true);
         vista.setLocationRelativeTo(null);
         this.vista.TablaSubastas.addMouseListener(this);
+        vista.idUsuario.setText(idCliente);
+        cargarTabla();
         
+    }
+    
+    private void cargarTabla(){
+        //Obtener Array de subastas
+        ArrayList<Subastador> datos = new ArrayList();
+        tablaBase.ver_tabla(vista.TablaSubastas, datos);
     }
     
     
@@ -49,6 +60,7 @@ public class SubastasController implements MouseListener{
                 JButton boton = (JButton) value;
                 switch (column) {
                     case 4:
+                        System.out.println("Print jeje");
                          //abrir la ventana de subasta  
                         break;
                 }
@@ -59,22 +71,22 @@ public class SubastasController implements MouseListener{
 
     @Override
     public void mousePressed(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("No tiene que ser implementado");
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("No tiene que ser implementado");
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("No tiene que ser implementado");
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("No tiene que ser implementado");
     }
     
 }

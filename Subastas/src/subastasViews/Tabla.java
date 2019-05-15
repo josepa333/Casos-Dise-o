@@ -25,7 +25,7 @@ public class Tabla {
         JButton botonUnirse = new JButton("Unirse");
 
         
-        Object fila[] = new Object[4];
+        Object fila[] = new Object[5];
         
             
         if(subastadores.size() > 0){

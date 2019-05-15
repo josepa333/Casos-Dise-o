@@ -11,10 +11,10 @@ package subastasViews;
  */
 public class CrearSubasta extends javax.swing.JFrame {
 
-    /**
-     * Creates new form CrearSubasta
-     */
-    public CrearSubasta() {
+    private String idSubastador;
+    
+    public CrearSubasta(String idSubastador) {
+        this.idSubastador = idSubastador;
         initComponents();
     }
 
@@ -44,6 +44,11 @@ public class CrearSubasta extends javax.swing.JFrame {
         jLabel3.setText("Precio inicial");
 
         crearSubastaButton.setText("Crear subasta");
+        crearSubastaButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                crearSubastaButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -88,6 +93,13 @@ public class CrearSubasta extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void crearSubastaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearSubastaButtonActionPerformed
+        SubastaSubastadorController subasta = new SubastaSubastadorController(idSubastador, 
+                fechaInicialText.getText(),
+                nombreProductoText.getText(),
+                precioInicialText.getText());
+    }//GEN-LAST:event_crearSubastaButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -118,7 +130,7 @@ public class CrearSubasta extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CrearSubasta().setVisible(true);
+                new CrearSubasta("").setVisible(true);
             }
         });
     }

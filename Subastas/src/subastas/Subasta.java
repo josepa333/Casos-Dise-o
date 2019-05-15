@@ -18,9 +18,9 @@ public class Subasta {
     private Producto producto;
     private String status;
 
-    public Subasta(Date inicio, Date finalProgramado, Producto producto) {
-        this.inicio = inicio;
-        this.finalProgramado = finalProgramado;
+    public Subasta(String finalProgramado, Producto producto) {
+        //this.inicio = inicio;
+        this.finalProgramado = new Date();
         this.producto = producto;
         this.status = "activa";
     }
