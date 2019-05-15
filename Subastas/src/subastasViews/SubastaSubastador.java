@@ -106,9 +106,9 @@ public class SubastaSubastador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton cancelarSubastaButton;
+    public javax.swing.JButton cancelarSubastaButton;
     public javax.swing.JTextArea feedTextArea;
-    private javax.swing.JButton finalizarSubastaButton;
+    public javax.swing.JButton finalizarSubastaButton;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

@@ -84,4 +84,7 @@ public class Oferente extends IServidor{ //Tener un arreglo de ControlerSubasta,
         return resultado;
     }
     
+    public void enviarOferta(String valorOferta){
+        
+    }
 }

@@ -23,6 +23,8 @@ public class SubastaSubastadorController implements ActionListener { //Todo mete
         subastador = new Subastador(idSubastador,fechaInicial,nombreProducto,precioInicial,this);
         vista = new SubastaSubastador();
         vista.show();
+        this.vista.cancelarSubastaButton.addActionListener(this);
+        this.vista.finalizarSubastaButton.addActionListener(this);
     }
 
     @Override

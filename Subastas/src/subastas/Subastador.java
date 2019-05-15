@@ -10,6 +10,7 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 import java.awt.Component;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.JOptionPane;
 import subastasViews.SubastaSubastadorController;
 
@@ -24,19 +25,24 @@ public class Subastador extends IServidor{ //TODO Hacerlo observer
     private SubastaSubastadorController controller;
     //Servidor
      private Conexion miConexion; 
+     private String ipServerServer;
+     private int puerto;
+     private String ipServerCliente;
      
     static XStream xstream;
     static String xml;
     
     public Subastador(String idSubastador,String fechaInicial,String nombreProducto,
             String precioInicial, SubastaSubastadorController controller) { //Crear hilo para la interfaz
+        ipServerServer = "172.19.51.112";
+        puerto = 6565;
+        ipServerCliente = "192.168.0.1";
         this.idSubastador = idSubastador;
         this.controller = controller;
-        miConexion = miConexion = new Conexion("172.19.51.112", 6565); //TODO definir server
+        miConexion = miConexion = new Conexion(ipServerServer, puerto); //TODO definir server
         this.subasta = new Subasta(fechaInicial, new Producto(nombreProducto, precioInicial));
         xstream = new XStream(new DomDriver());
         crearSubasta();
-        
         
         //whileTrue(); //Todo hilo server 
     }
@@ -58,7 +64,8 @@ public class Subastador extends IServidor{ //TODO Hacerlo observer
     }
     
     private void crearSubasta(){
-        Mensaje miMensaje = new Mensaje(TipoMensaje.INICIARSUBASTA, this.idSubastador,subasta.addToFeed("Subasta finalizada"));
+        Mensaje miMensaje = new Mensaje(TipoMensaje.INICIARSUBASTA, this.idSubastador,
+        xstream.toXML(new ArrayList<>(Arrays.asList(ipServerCliente, idSubastador))));
         try {
             miConexion.abrirConexion();
             miConexion.obtenerFlujos();

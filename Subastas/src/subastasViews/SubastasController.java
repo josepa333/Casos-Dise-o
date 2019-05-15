@@ -12,17 +12,12 @@ import javax.swing.JButton;
 import subastas.Oferente;
 import subastas.Subastador;
 
-/**
- *
- * @author jose pablo
- */
-public class SubastasController implements MouseListener{
 
+public class SubastasController implements MouseListener{
     
     private ListaSubastas vista;
     private String idCliente;
     Tabla tablaBase = new Tabla();
-    
     
     public SubastasController(String idCliente) {
         this.idCliente = idCliente;
@@ -32,7 +27,6 @@ public class SubastasController implements MouseListener{
         this.vista.TablaSubastas.addMouseListener(this);
         vista.idUsuario.setText(idCliente);
         cargarTabla();
-        
     }
     
     private void cargarTabla(){
@@ -41,8 +35,6 @@ public class SubastasController implements MouseListener{
         tablaBase.ver_tabla(vista.TablaSubastas, datos);
     }
     
-    
-
     @Override
     public void mouseClicked(MouseEvent e) {
         
@@ -61,9 +53,9 @@ public class SubastasController implements MouseListener{
                 JButton boton = (JButton) value;
                 switch (column) {
                     case 4:
-                        System.out.println("Print jeje");
-                         //abrir la ventana de subasta  
-                        break;
+                        System.out.println("Print jeje"); 
+                         
+                        break; 
                 }
                 System.out.println(row);
             }
@@ -89,5 +81,4 @@ public class SubastasController implements MouseListener{
     public void mouseExited(MouseEvent e) {
         System.out.println("No tiene que ser implementado");
     }
-    
 }

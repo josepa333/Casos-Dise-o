@@ -75,11 +75,17 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Finalizar subasta"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="cancelarSubastaButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Cancelar subasta"/>
       </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="1"/>
+      </AuxValues>
     </Component>
   </SubComponents>
 </Form>

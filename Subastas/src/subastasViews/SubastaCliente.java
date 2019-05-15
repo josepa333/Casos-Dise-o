@@ -36,6 +36,7 @@ public class SubastaCliente extends javax.swing.JFrame {
 
         feedArea.setColumns(20);
         feedArea.setRows(5);
+        feedArea.setText("ME CAGO EN MI VIDA!");
         jScrollPane1.setViewportView(feedArea);
 
         ofertarButton.setText("Ofertar");
@@ -105,9 +106,9 @@ public class SubastaCliente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea feedArea;
+    public javax.swing.JTextArea feedArea;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton ofertarButton;
-    private javax.swing.JTextField valorOferta;
+    public javax.swing.JButton ofertarButton;
+    public javax.swing.JTextField valorOferta;
     // End of variables declaration//GEN-END:variables
 }
