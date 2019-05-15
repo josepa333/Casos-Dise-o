@@ -20,7 +20,9 @@ public class TablaMensajes {
         tablaPredeterminada.addColumn("Mensaje");
         tablaPredeterminada.addColumn("Likes");
         tablaPredeterminada.addColumn("Dislikes");
-        JButton botonLike = new JButton("Likes");
+        tablaPredeterminada.addColumn("Like");
+        tablaPredeterminada.addColumn("Dislike");
+        JButton botonLike = new JButton("Like");
         JButton botonDislike = new JButton("Dislike");
         
         Object fila[] = new Object[6];
@@ -47,5 +49,7 @@ public class TablaMensajes {
         }
         pTabla.setModel(tablaPredeterminada);
         pTabla.setRowHeight(30);
+        pTabla.repaint();
+
     }
 }

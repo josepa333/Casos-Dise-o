@@ -28,18 +28,18 @@ public class ListaCelebridadesView extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        TablaSubastas = new javax.swing.JTable();
+        TablaMensajes = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
-        TablaSubastas1 = new javax.swing.JTable();
+        TablaCelebridades = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        textAreaActualizaciones = new javax.swing.JTextArea();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        TablaSubastas.setModel(new javax.swing.table.DefaultTableModel(
+        TablaMensajes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -50,9 +50,9 @@ public class ListaCelebridadesView extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(TablaSubastas);
+        jScrollPane1.setViewportView(TablaMensajes);
 
-        TablaSubastas1.setModel(new javax.swing.table.DefaultTableModel(
+        TablaCelebridades.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -63,11 +63,11 @@ public class ListaCelebridadesView extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(TablaSubastas1);
+        jScrollPane2.setViewportView(TablaCelebridades);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane3.setViewportView(jTextArea1);
+        textAreaActualizaciones.setColumns(20);
+        textAreaActualizaciones.setRows(5);
+        jScrollPane3.setViewportView(textAreaActualizaciones);
 
         jLabel1.setText("Actualizaciones:");
 
@@ -159,14 +159,14 @@ public class ListaCelebridadesView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JTable TablaSubastas;
-    public javax.swing.JTable TablaSubastas1;
+    public javax.swing.JTable TablaCelebridades;
+    public javax.swing.JTable TablaMensajes;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea textAreaActualizaciones;
     // End of variables declaration//GEN-END:variables
 }
