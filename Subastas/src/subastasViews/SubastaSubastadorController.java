@@ -30,9 +30,13 @@ public class SubastaSubastadorController implements ActionListener { //Todo mete
         switch(e.getActionCommand()) {
            case "Finalizar subasta":
                System.out.println("Finalizar subasta");
+               subastador.finalizarSubasta();
+               vista.feedTextArea.setText(subastador.getSubasta().addToFeed("Subasta finalizada") );
                break;
            case "Cancelar subasta":
                System.out.println("Cancelar subasta");
+               subastador.cancelarSubasta();
+               vista.feedTextArea.setText(subastador.getSubasta().addToFeed("Subasta cancelada") );
                break;
        }
     }

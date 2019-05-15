@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import javax.swing.JButton;
+import subastas.Oferente;
 import subastas.Subastador;
 
 /**
@@ -35,7 +36,7 @@ public class SubastasController implements MouseListener{
     }
     
     private void cargarTabla(){
-        //Obtener Array de subastas
+        Oferente tmpOferente = new Oferente("Temporal");
         ArrayList<Subastador> datos = new ArrayList();
         tablaBase.ver_tabla(vista.TablaSubastas, datos);
     }

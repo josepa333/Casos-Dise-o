@@ -17,12 +17,14 @@ public class Subasta {
     private Date finalProgramado;
     private Producto producto;
     private String status;
+    private String feed;
 
     public Subasta(String finalProgramado, Producto producto) {
         //this.inicio = inicio;
         this.finalProgramado = new Date();
         this.producto = producto;
         this.status = "activa";
+        this.feed = "";
     }
     
     public void pujar(int nuevoPrecio){
@@ -59,6 +61,18 @@ public class Subasta {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getFeed() {
+        return feed;
+    }
+
+    public void setFeed(String feed) {
+        this.feed = feed;
+    }
+    
+    public String addToFeed(String newSection){
+        return feed +=  "\t" + newSection;
     }
     
     

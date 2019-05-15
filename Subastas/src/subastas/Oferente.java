@@ -5,7 +5,9 @@
  */
 package subastas;
 
+import com.thoughtworks.xstream.XStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  *
@@ -16,9 +18,14 @@ public class Oferente extends IServidor{ //Tener un arreglo de ControlerSubasta,
     
     
     private String idOferente;
+    private Conexion miConexion; 
 
+    static XStream xstream;
+    static String xml;
+    
     public Oferente(String idOferente) {
         this.idOferente = idOferente;
+        miConexion = miConexion = new Conexion("172.19.51.112", 6565); //TODO definir server
     }
 
     public String getIdOferente() {
@@ -38,12 +45,43 @@ public class Oferente extends IServidor{ //Tener un arreglo de ControlerSubasta,
         }
         else switch (mensaje.getTipo()) {
             case ACEPTAROFERTA:
-                enviarMensaje(mensaje);
+                ofertaAceptada(mensaje);
                 break;
+            
             default:
                 System.out.println("No se reconocio el tipo de mensaje");
                 break;
         }
+    }
+    
+    private void ofertaAceptada(Mensaje mensaje){
+        ///TODO
+    }
+    
+    private ArrayList<Subastador> cargarSubastadores(){
+        Mensaje miMensaje = new Mensaje(TipoMensaje.CONSULTASUBASTA, idOferente ,"");
+        Mensaje resultado = null;
+        try {
+            miConexion.abrirConexion();
+            miConexion.obtenerFlujos();
+            miConexion.enviarMensaje(miMensaje);
+            resultado = miConexion.recibirMensaje();
+            miConexion.cerrarConexion();
+        }
+        catch (IOException e) {
+            System.out.println(e);
+        }
+        
+        return obtenerSubastadoresDeXml(resultado);
+    }
+    
+    private ArrayList<Subastador> obtenerSubastadoresDeXml(Mensaje datos){
+        ArrayList<String> subastadoresXML = (ArrayList<String>) xstream.fromXML(datos.getCuerpo());
+        ArrayList<Subastador> resultado = new ArrayList();
+        for (int i = 0; i < subastadoresXML.size(); i++) {
+            resultado.add((Subastador) xstream.fromXML(subastadoresXML.get(i)) );
+        }
+        return resultado;
     }
     
 }

@@ -22,9 +22,8 @@ public class Subastador extends IServidor{ //TODO Hacerlo observer
     private String idSubastador;
     private Subasta subasta;
     private SubastaSubastadorController controller;
-    
     //Servidor
-     
+     private Conexion miConexion; 
      
     static XStream xstream;
     static String xml;
@@ -33,8 +32,11 @@ public class Subastador extends IServidor{ //TODO Hacerlo observer
             String precioInicial, SubastaSubastadorController controller) { //Crear hilo para la interfaz
         this.idSubastador = idSubastador;
         this.controller = controller;
+        miConexion = miConexion = new Conexion("172.19.51.112", 6565); //TODO definir server
         this.subasta = new Subasta(fechaInicial, new Producto(nombreProducto, precioInicial));
         xstream = new XStream(new DomDriver());
+        crearSubasta();
+        
         
         //whileTrue(); //Todo hilo server 
     }
@@ -54,6 +56,19 @@ public class Subastador extends IServidor{ //TODO Hacerlo observer
     public void setSubasta(Subasta subasta) {
         this.subasta = subasta;
     }
+    
+    private void crearSubasta(){
+        Mensaje miMensaje = new Mensaje(TipoMensaje.INICIARSUBASTA, this.idSubastador,subasta.addToFeed("Subasta finalizada"));
+        try {
+            miConexion.abrirConexion();
+            miConexion.obtenerFlujos();
+            miConexion.enviarMensaje(miMensaje);
+            miConexion.cerrarConexion();
+        }
+        catch (IOException e) {
+            System.out.println(e);
+        }
+    }
 
     @Override
     public void procesarConexion() throws IOException, ClassNotFoundException{
@@ -62,14 +77,21 @@ public class Subastador extends IServidor{ //TODO Hacerlo observer
         if(null == mensaje.getTipo()) {
             System.out.println("No se reconocio el tipo de mensaje");
         }
-        else switch (mensaje.getTipo()) {
+        else switch (mensaje.getTipo()) { 
             case OFERTA:
-                enviarMensaje( procesarOferta(mensaje));
+                procesarOferta(mensaje);  //TODO responder a todos
+                break;
+            case CONSULTASUBASTA:
+                enviarMensaje(informacionSubasta());
                 break;
             default:
                 System.out.println("No se reconocio el tipo de mensaje");
                 break;
         }
+    }
+    
+    private Mensaje informacionSubasta(){
+        return new Mensaje(TipoMensaje.CONSULTASUBASTA, idSubastador,xstream.toXML(this)); 
     }
     
     private Mensaje procesarOferta(Mensaje mensaje){
@@ -79,12 +101,41 @@ public class Subastador extends IServidor{ //TODO Hacerlo observer
                 "El usuario " + mensaje.getUsuario() + "ha ofrecido " + data.get(0) + ", desea aceptar la oferta?",
                 "alert", JOptionPane.OK_CANCEL_OPTION);
         if(resultado == 0){
-            mensajeResultado = new Mensaje(TipoMensaje.RECHAZAROFERTA, idSubastador,data.get(0));
+            mensajeResultado = new Mensaje(TipoMensaje.RECHAZAROFERTA, idSubastador,data.get(0));//TODO deberia
+            //responder
         }
         else{
             mensajeResultado = new Mensaje(TipoMensaje.ACEPTAROFERTA, idSubastador,data.get(0));
+            subasta.getProducto().setPrecioFinal(Double.parseDouble(data.get(0))); //Avisar al resto
         }
         return mensajeResultado;
+    }
+    
+    public void finalizarSubasta(){
+        Mensaje miMensaje = new Mensaje(TipoMensaje.SUBASTAFINALIZADA, this.idSubastador,subasta.addToFeed("Subasta finalizada"));
+        try {
+            miConexion.abrirConexion();
+            miConexion.obtenerFlujos();
+            miConexion.enviarMensaje(miMensaje);
+            miConexion.cerrarConexion();
+        }
+        catch (IOException e) {
+            System.out.println(e);
+        }
+    }
+    
+    public void cancelarSubasta(){
+        Mensaje miMensaje = new Mensaje(TipoMensaje.SUBASTACANCELADA, this.idSubastador,subasta.addToFeed("Subasta cancelada"));
+        try {
+            miConexion.abrirConexion();
+            miConexion.obtenerFlujos();
+            miConexion.enviarMensaje(miMensaje);
+            miConexion.cerrarConexion();
+        }
+        catch (IOException e) {
+            System.out.println(e);
+        }
+        
     }
 
 }
