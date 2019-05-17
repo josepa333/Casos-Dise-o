@@ -16,25 +16,27 @@ public class Tabla {
                 return false;
             }
         };
+        
         tablaPredeterminada.addColumn("Subastador");
+        tablaPredeterminada.addColumn("idObservable");
         tablaPredeterminada.addColumn("Producto");
         tablaPredeterminada.addColumn("Precio");
         tablaPredeterminada.addColumn("Estado");
         tablaPredeterminada.addColumn("Unirse");
-
         JButton botonUnirse = new JButton("Unirse");
 
         
-        Object fila[] = new Object[5];
+        Object fila[] = new Object[6];
         
             
         if(subastadores.size() > 0){
             for(int i=0; i<subastadores.size(); i++){
                 fila[0] = subastadores.get(i).get(1);
-                fila[1] = subastadores.get(i).get(2);
-                fila[2] =subastadores.get(i).get(3);
-                fila[3] = subastadores.get(i).get(4);
-                fila[4] = botonUnirse;
+                fila[1] = subastadores.get(i).get(0);
+                fila[2] = subastadores.get(i).get(2);
+                fila[3] =subastadores.get(i).get(3);
+                fila[4] = subastadores.get(i).get(4);
+                fila[5] = botonUnirse;
                 tablaPredeterminada.addRow(fila);
             }
         }
@@ -43,7 +45,8 @@ public class Tabla {
             fila[1] = "";
             fila[2] = "";
             fila[3] = "";
-            fila[4] = botonUnirse;
+            fila[4] = "";
+            fila[5] = botonUnirse;
             tablaPredeterminada.addRow(fila);
         }
         pTabla.setModel(tablaPredeterminada);

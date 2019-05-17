@@ -44,16 +44,19 @@ public class SubastaConnection extends Connection{
                 int resultado = JOptionPane.showConfirmDialog((Component) null,
                         "El usuario " + message.getUser()+ " ha ofrecido " + data.get(1) + ", desea aceptar la oferta?",
                         "alert", JOptionPane.OK_CANCEL_OPTION);
-                if(resultado == 1){
-                    mensajeResultado = new Message(4, data.get(0),data.get(1));
-                }
-                else{
-                    mensajeResultado = new Message(5, xstream.toXML(data) ,message.getUser());
+                if(resultado == 0){
+                     mensajeResultado = new Message(5, xstream.toXML(data) ,message.getUser());
                     subastador.getSubasta().pujar(data.get(1));
                     String tmpString = subastador.getController().getVista().feedTextArea.getText();
-                    System.out.println("En al caja hay: " + subastador.getController().getVista().feedTextArea.getText());
                     subastador.getController().getVista().feedTextArea.setText( 
-                            tmpString + "\nSe ha aceptado la oferta de " + message.getUser() + "de" + data.get(1));
+                            tmpString + "\nSe ha aceptado la oferta de " + message.getUser() + " de " + data.get(1));
+                }
+                else{
+                    System.out.println("SE cancela la oferta");
+                    mensajeResultado = new Message(4, data.get(0),data.get(1));
+                    String tmpString = subastador.getController().getVista().feedTextArea.getText();
+                    subastador.getController().getVista().feedTextArea.setText( 
+                            tmpString + "\nSe ha rechazado la oferta de " + message.getUser() + " de " + data.get(1));
                 }
                 sendMessage(mensajeResultado);
                 break;
@@ -63,10 +66,16 @@ public class SubastaConnection extends Connection{
                             tmpString +"\n" + message.getContent() );
               break;
             case SUBASTACANCELADA:
-             System.out.println("andalewei");
+                String tmpStringCancelada = subastador.getController().getVista().feedTextArea.getText();
+                System.out.println("En al caja hay: " + subastador.getController().getVista().feedTextArea.getText());
+                    subastador.getController().getVista().feedTextArea.setText( 
+                            tmpStringCancelada + "\nSe ha cancelado la subasta");
                 break;
           case SUBASTAFINALIZADA:
-              System.out.println("chingatumadre");
+              String tmpStringFinalizada = subastador.getController().getVista().feedTextArea.getText();
+              System.out.println("En al caja hay: " + subastador.getController().getVista().feedTextArea.getText());
+                    subastador.getController().getVista().feedTextArea.setText( 
+                            tmpStringFinalizada + "\nSe ha finalizado la subasta");
                 break;
             default:
                 System.out.println("No se reconocio el tipo de mensaje");                

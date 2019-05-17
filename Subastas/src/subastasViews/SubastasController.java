@@ -55,7 +55,7 @@ public class SubastasController implements MouseListener{
                 ((JButton) value).doClick();
                 JButton boton = (JButton) value;
                 switch (column) {
-                    case 4:
+                    case 5:
                         System.out.println("Print heehee"); 
                         if(subastadores.get(row).get(4).equals("Activa") ){
                             oferente.addSubasta(new SubastaClienteController(idCliente,oferente,

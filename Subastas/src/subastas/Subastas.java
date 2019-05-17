@@ -3,8 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package subastas;
+package subastas; 
 
+import client_server_API.Message;
+import java.awt.Component;
+import javax.swing.JOptionPane;
+import static subastas.SubastasServer.xstream;
 import subastasViews.InicioSesion;
 
 

@@ -6,12 +6,8 @@ import client_server_API.Message;
 import client_server_API.Server;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 public class SubastasServer extends Server{
@@ -78,7 +74,7 @@ public class SubastasServer extends Server{
                 ArrayList<String> dataAceptar = (ArrayList<String>) xstream.fromXML(message.getContent());
                 AbstractObservable tmpOfertaAceptada = findObservable( Integer.parseInt(dataAceptar.get(0)));
                 tmpOfertaAceptada.getData().set(3, dataAceptar.get(1));
-                tmpOfertaAceptada.notifyAllObservers(new Message(5,"Se aceptó la oferta de "+dataAceptar.get(1),message.getContent()) );
+                tmpOfertaAceptada.notifyAllObservers(new Message(5,"Se aceptó la oferta de " + dataAceptar.get(1),message.getContent()) );
                 tmpOfertaAceptada.getData().add( message.getUser() );
                 break;
           case UNIRSESUBASTA:
@@ -88,18 +84,14 @@ public class SubastasServer extends Server{
                 break;
          case SUBASTACANCELADA:
              System.out.println("Cancelamos la oferta");
-              ArrayList<String> datosCancelada = new ArrayList();
-              datosCancelada.add(message.getContent());
-              findObservable(Integer.parseInt(message.getContent())).notifyAllObservers(new Message(5,
-              "La subasta ha sido cancelada", xstream.toXML(datosCancelada) ));
+              findObservable(Integer.parseInt(message.getContent())).notifyAllObservers(new Message(7,
+              "La subasta ha sido cancelada", message.getContent()));
               findObservable(Integer.parseInt(message.getContent())).getData().set(4, "Cancelada");
                 break;
           case SUBASTAFINALIZADA:
               System.out.println("finalizamos la oferta ");
-              ArrayList<String> datosFinalizada = new ArrayList();
-              datosFinalizada.add(message.getContent());
               AbstractObservable tmpObservableFinalizar = findObservable(Integer.parseInt(message.getContent()));
-              tmpObservableFinalizar.notifyAllObservers(new Message(5,
+              tmpObservableFinalizar.notifyAllObservers(new Message(8,
               "La subasta ha finalizado con un monto de: " + message.getUser()+"\n, " + 
                       "felicidades al ganador: " + tmpObservableFinalizar.getData().get(5) , message.getContent() ));
               tmpObservableFinalizar.getData().set(4, "Finalizada");
