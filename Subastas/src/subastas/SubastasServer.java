@@ -56,6 +56,7 @@ public class SubastasServer extends Server{
                 tmpOfertaRechazada.notifyAllObservers(new Message(5,"Se rechazó la oferta de "+message.getUser(),message.getContent()) );
                 break;
           case ACEPTAROFERTA:
+            
                 AbstractObservable tmpOfertaAceptada = findObservable( Integer.parseInt(message.getContent() ));
                 tmpOfertaAceptada.notifyAllObservers(new Message(5,"Se aceptó la oferta de "+message.getUser(),message.getContent()) );
                 break;
@@ -63,6 +64,16 @@ public class SubastasServer extends Server{
               addObserver(findObservable(Integer.parseInt(message.getContent())), new Client(this.output, this.clientInetAddress));
               findObservable(Integer.parseInt(message.getContent())).notifyAllObservers(new Message(5,
               "Se ha unido a la subasta: " + message.getUser(), message.getContent() ));
+                break;
+         case SUBASTACANCELADA:
+             System.out.println("Cancelamos la oferta");
+              findObservable(Integer.parseInt(message.getContent())).notifyAllObservers(new Message(5,
+              "La subasta ha sido cancelada", message.getContent() ));
+                break;
+          case SUBASTAFINALIZADA:
+              System.out.println("finalizamos la oferta ");
+              findObservable(Integer.parseInt(message.getContent())).notifyAllObservers(new Message(5,
+              "La subasta ha finalizado con un monto de: " + message.getUser(), message.getContent() ));
                 break;
             default:
                 System.out.println("No se reconocio el tipo de mensaje");

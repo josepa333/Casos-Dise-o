@@ -52,6 +52,12 @@ public class SubastaConnection extends Connection{
                 }
                 sendMessage(mensajeResultado);
                 break;
+                         case SUBASTACANCELADA:
+             System.out.println("andalewei");
+                break;
+          case SUBASTAFINALIZADA:
+              System.out.println("chingatumadre");
+                break;
             default:
                 System.out.println("No se reconocio el tipo de mensaje");
                 break;
