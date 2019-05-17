@@ -3,19 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package javabomboclat;
+package client_server_API;
 
 /**
  *
  * @author Ricardo Bonilla
  */
-public class JavaBomboclat {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
-    }
-    
+public interface IObservable {
+    public void addObserver(IObserver observer);
+    public void removeObserver(IObserver observer);
+    public void notifyAllObservers(Message message);
 }

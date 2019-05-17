@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package javabomboclat;
+package client_server_API;
 
 /**
  *
- * @author Angelo PC
+ * @author Ricardo Bonilla
  */
-public interface IMessager {
+public class Subasta extends AbstractObservable{
     
-    public void sendMessage(Message message);
-    public void receiveMessage();
+    public Subasta() {
+    }
+    
 }
