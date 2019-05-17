@@ -25,6 +25,7 @@ public class SubastaConnection extends Connection{
     public SubastaConnection(String servername, Subastador subastador) throws Exception {
         super(servername, 9999);
         this.subastador = subastador;
+       // sendMessage(new Message(2,"",""));
     }
     
     

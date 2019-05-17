@@ -6,19 +6,20 @@
 package redsocial.model;
 
 import client_server_API.AbstractObservable;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Angelo PC
  */
-public class Vip extends AbstractObservable{
+public class Vip extends AbstractObservable implements Serializable{
     private ArrayList<MensajeVip> mensajes;
     private ArrayList<Seguidor> seguidores;
-    private String id;
-    
+    private String user;
+  
     public Vip(String id){
-        this.id = id;
+        this.user = id;
         this.seguidores = new ArrayList();
         this.mensajes = new ArrayList();
     }
@@ -32,6 +33,11 @@ public class Vip extends AbstractObservable{
     }
     
     public void addSeguidor(Seguidor seguidor){
+        for(Seguidor seg : seguidores){
+            if(seg.getIdSeguidor().equals(seguidor.getIdSeguidor())){
+                return;
+            }
+        }
         this.seguidores.add(seguidor);
     }
 
@@ -43,16 +49,17 @@ public class Vip extends AbstractObservable{
         this.mensajes = mensajes;
     }
 
-    public void addMensaje(String mensaje){
+    public String addMensaje(String mensaje){
         this.mensajes.add(new MensajeVip(mensaje,this.mensajes.size()));
+        return mensajes.get(mensajes.size() - 1).getContenido();
     }
     
-    public String getId() {
-        return id;
+    public String getUser() {
+        return user;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUser(String id) {
+        this.user = id;
     }
    
     
@@ -71,4 +78,11 @@ public class Vip extends AbstractObservable{
         mensajes.get(idMensaje).agregarDislike(idUsuario);
     }
     
+    @Override
+    public ArrayList<String> getData(){
+        ArrayList<String> data = new ArrayList();
+        data.add(user);
+        data.add(Integer.toString(getSeguidores().size()));
+        return data;
+    }
 }

@@ -9,17 +9,17 @@ import client_server_API.Client;
 import client_server_API.Message;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.net.InetAddress;
 
 /**
  *
  * @author Angelo PC
  */
-public class Seguidor extends Client{
+public class Seguidor implements Serializable{
     private String idSeguidor;
 
-    public Seguidor(String idSeguidor,ObjectOutputStream output, InetAddress inetAddress) {
-        super(output,inetAddress);
+    public Seguidor(String idSeguidor) {
         this.idSeguidor = idSeguidor;
     }
 

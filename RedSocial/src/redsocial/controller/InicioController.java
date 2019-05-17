@@ -8,8 +8,14 @@ package redsocial.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import redsocial.model.SeguidorConexion;
+import redsocial.model.Vip;
+import redsocial.model.VipConexion;
+
 import redsocial.view.InicioView;
 /**
  *
@@ -46,12 +52,20 @@ public class InicioController implements ActionListener{
     
     if (null != button) {
         if(button.getText().equals("Login Artista")){
-            CelebridadController cc = new CelebridadController(user,ip);
+            try {
+                VipConexion vc = new VipConexion(ip,new Vip(user));
+            } catch (Exception ex) {
+                Logger.getLogger(InicioController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             this.vista.dispose();
 
         }
         else{
-            ListaCelebridadesController lcc = new ListaCelebridadesController(user,ip);
+            try {
+                SeguidorConexion sc = new SeguidorConexion(ip,user);
+            } catch (Exception ex) {
+                Logger.getLogger(InicioController.class.getName()).log(Level.SEVERE, null, ex);
+            }
             this.vista.dispose();
 
         }

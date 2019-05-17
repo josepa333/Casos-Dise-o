@@ -8,7 +8,7 @@ import redsocial.model.MensajeVip;
 
 public class TablaMensajes {
     
-    public void ver_tabla(JTable pTabla,ArrayList<MensajeVip> mensajes){
+    public void ver_tabla(JTable pTabla,ArrayList<String> mensajes){
         
         pTabla.setDefaultRenderer(Object.class, new Render());
         DefaultTableModel tablaPredeterminada = new DefaultTableModel(){
@@ -16,35 +16,26 @@ public class TablaMensajes {
                 return false;
             }
         };
-        tablaPredeterminada.addColumn("Fecha");
         tablaPredeterminada.addColumn("Mensaje");
-        tablaPredeterminada.addColumn("Likes");
-        tablaPredeterminada.addColumn("Dislikes");
         tablaPredeterminada.addColumn("Like");
         tablaPredeterminada.addColumn("Dislike");
         JButton botonLike = new JButton("Like");
         JButton botonDislike = new JButton("Dislike");
         
-        Object fila[] = new Object[6];
+        Object fila[] = new Object[3];
             
         if(mensajes.size() > 0){
             for(int i=0; i<mensajes.size(); i++){
-                fila[0] = mensajes.get(i).getFecha().toString();
-                fila[1] = mensajes.get(i).getContenido();
-                fila[2] = mensajes.get(i).getLikes();
-                fila[3] = mensajes.get(i).getDislikes();
-                fila[4] = botonLike;
-                fila[5] = botonDislike;
+                fila[0] = mensajes.get(i);
+                fila[1] = botonLike;
+                fila[2] = botonDislike;
                 tablaPredeterminada.addRow(fila);
             }
         }
         else{
             fila[0] = "";
-            fila[1] = "";
-            fila[2] = "";
-            fila[3] = "";
-            fila[4] = botonLike;
-            fila[5] = botonDislike;
+            fila[1] = botonLike;
+            fila[2] = botonDislike;
             tablaPredeterminada.addRow(fila);
         }
         pTabla.setModel(tablaPredeterminada);

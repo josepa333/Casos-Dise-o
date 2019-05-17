@@ -74,7 +74,7 @@ public class Server {
     private void process() throws Exception  {
         System.out.println("\n\n++++++++++++++++++++++++++++++++++++");
         System.out.println("Esperando una Conexión...");
-        while( true) {
+        while(true) {
            this.connection = this.serverSocket.accept();
            HandleClient c = new HandleClient(this.connection);
            System.out.println("Conectado a :" + connection.getInetAddress().getHostName());
