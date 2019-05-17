@@ -15,6 +15,7 @@ public class AbstractObservable implements IObservable{
 
     private final ArrayList<IObserver> observers = new ArrayList<>();
     private int idObservable;
+    private ArrayList<String> data;
     
     public AbstractObservable() {
     }
@@ -35,6 +36,10 @@ public class AbstractObservable implements IObservable{
             observer.notifyObserver(message);
         }       
     }
+    
+    public void notifyFirts(Message message){
+        observers.get(0).notifyObserver(message);
+    }
 
     public int getIdObservable() {
         return idObservable;
@@ -43,4 +48,16 @@ public class AbstractObservable implements IObservable{
     public void setIdObservable(int idObservable) {
         this.idObservable = idObservable;
     }
+
+    public ArrayList<String> getData() {
+        return data;
+    }
+
+    public void setData(ArrayList<String> data) {
+        this.data = data;
+    }
+    
+
+
+    
 }

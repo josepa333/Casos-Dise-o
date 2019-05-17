@@ -12,12 +12,12 @@ public class Server {
     private static Server server;
     private int port;
     private ServerSocket serverSocket;
-    private Socket connection;
-    private ArrayList<IObservable> observables;
+    public Socket connection;
+    public ArrayList<AbstractObservable> observables;
     private int observableAmount;
-    ObjectInputStream input;
-    ObjectOutputStream output;
-    InetAddress clientInetAddress;
+    public ObjectInputStream input;
+    public ObjectOutputStream output;
+    public InetAddress clientInetAddress;
   
     public Server(int port) throws Exception{
         this.port = port;
@@ -27,7 +27,7 @@ public class Server {
         process();
     }
     
-    private synchronized static void createInstance(int port) throws Exception {
+    public synchronized static void createInstance(int port) throws Exception {
         if(server == null)
             server = new Server(port);
     }
@@ -38,7 +38,7 @@ public class Server {
         return server;
     }
     
-    private void startServer() {
+    public void startServer() {
         try {
             this.serverSocket = new ServerSocket(this.port, 10);
             System.out.println("El servidor está en el puerto: " + serverSocket.getLocalPort());
@@ -48,14 +48,14 @@ public class Server {
         }
     }
     
-    private void addObservable(AbstractObservable observable) {
+    public void addObservable(AbstractObservable observable) {
         observable.setIdObservable(observableAmount);
         this.observables.add(observable);
         addObserver(observable, new Client(this.output, this.clientInetAddress));
         this.observableAmount = this.observableAmount + 1;
     }
     
-    private AbstractObservable findObservable(int idObservable) {
+    public AbstractObservable findObservable(int idObservable) {
         for (int i = 0; i < this.observables.size(); i++) {
             AbstractObservable observable = (AbstractObservable) this.observables.get(i);
             if (observable.getIdObservable() == idObservable) {
@@ -65,10 +65,11 @@ public class Server {
         return null;
     }
     
-    private void addObserver(AbstractObservable observable, Client observer) {
+    public void addObserver(AbstractObservable observable, Client observer) {
         observable.addObserver(observer);
-        observable.notifyAllObservers(new Message(2, "Se ha agregado el observador " + observer.getInetAddress() + " al observable: " + observable.getIdObservable(), "server"));
+        //observable.notifyAllObservers(new Message(1, "Se ha agregado el observador " + observer.getInetAddress() + " al observable: " + observable.getIdObservable(), "server"));
     }
+    
 
     private void process() throws Exception  {
         System.out.println("\n\n++++++++++++++++++++++++++++++++++++");
@@ -85,8 +86,8 @@ public class Server {
         switch (message.getType()) {
             case 1: //Caso añadir Observable
                 XStream xstream = new XStream(new DomDriver());
-                AbstractObservable observable =  (AbstractObservable)(xstream.fromXML(message.getContent()));
-                addObservable(observable);
+                //AbstractObservable observable =  (AbstractObservable)(xstream.fromXML(message.getContent()));
+                //addObservable(observable); 
                 break;
             case 2: //Caso añadir Observador a Observable
                 int idObservable = Integer.parseInt(message.getContent());
@@ -121,7 +122,7 @@ public class Server {
            start();
         }
         
-        private Message readMessage() throws IOException, ClassNotFoundException {
+        public Message readMessage() throws IOException, ClassNotFoundException {
             Message message = (Message) input.readObject();
             System.out.println("leer:\n" + message.toString()) ;
             return message;

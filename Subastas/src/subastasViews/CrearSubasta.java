@@ -43,6 +43,12 @@ public class CrearSubasta extends javax.swing.JFrame {
 
         jLabel3.setText("Precio inicial");
 
+        fechaInicialText.setText("12/12/2019");
+
+        nombreProductoText.setText("Prod");
+
+        precioInicialText.setText("123");
+
         crearSubastaButton.setText("Crear subasta");
         crearSubastaButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

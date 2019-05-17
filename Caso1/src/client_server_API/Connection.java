@@ -1,21 +1,15 @@
 package client_server_API;
 
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.io.xml.DomDriver;
+
 import java.io.*;
-import java.util.*;
 import java.net.*;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import static java.lang.System.out;
 
 
 
 public class  Connection{
-    private ObjectOutputStream output;
-    private ObjectInputStream input;
-    private Socket clientSocket;
+    public ObjectOutputStream output;
+    public ObjectInputStream input;
+    public  Socket clientSocket;
     
     public Connection(String servername, int serverport) throws Exception {
         clientSocket  = new Socket(servername, serverport);
@@ -72,7 +66,7 @@ public class  Connection{
                 while(true) {
                     processConnection(readMessage());
                 } // end of while
-            } catch(Exception ex) {}
+            } catch(IOException | ClassNotFoundException ex) {}
         }
     }
 } //  end of client

@@ -5,6 +5,7 @@
  */
 package subastas;
 
+import client_server_API.AbstractObservable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,7 +14,8 @@ import java.util.Date;
  *
  * @author jose pablo
  */
-public class Subasta {
+
+public class Subasta{
     
     private Date inicio;
     private Date finalProgramado;
@@ -34,7 +36,7 @@ public class Subasta {
         }
     }
     
-    public void pujar(int nuevoPrecio){
+    public void pujar(String nuevoPrecio){
         producto.setPrecioFinal(nuevoPrecio);
     }
     
@@ -81,7 +83,4 @@ public class Subasta {
     public String addToFeed(String newSection){
         return feed +=  "\t" + newSection;
     }
-    
-    
-    
 }

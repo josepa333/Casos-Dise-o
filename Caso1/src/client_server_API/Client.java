@@ -10,10 +10,7 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 
-/**
- *
- * @author Ricardo Bonilla
- */
+
 public class Client implements IObserver{
     private ObjectOutputStream output;
     private InetAddress inetAddress;
@@ -30,7 +27,7 @@ public class Client implements IObserver{
         sendMessage(message);
     }
     
-    private void sendMessage(Message message) {
+    public void sendMessage(Message message) {
         try {
             this.output.writeObject(message);
             this.output.flush();

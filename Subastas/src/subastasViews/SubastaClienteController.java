@@ -14,13 +14,15 @@ public class SubastaClienteController implements ActionListener{
 
     private SubastaCliente vista;
     private Oferente modelo;
-    
-    public SubastaClienteController(String idCliente, String idSubastador) {
+    private int idSubasta;
+     
+            
+    public SubastaClienteController(String idCliente, Oferente oferente, int idSubasta) {
         vista = new SubastaCliente();
         vista.show();
         vista.ofertarButton.addActionListener(this);
-        modelo = new Oferente(idCliente, this);
-        vista.feedArea.setText(modelo.unirseSubasta( idSubastador ));
+        this.modelo = oferente;
+        this.idSubasta = idSubasta;
     }
     
     @Override
@@ -28,7 +30,7 @@ public class SubastaClienteController implements ActionListener{
         switch(e.getActionCommand()) {
            case "Ofertar":
                System.out.println("Ofertar");
-               modelo.enviarOferta(vista.valorOferta.getText());
+               modelo.enviarOferta(vista.valorOferta.getText(), idSubasta );
                break;
        }
     }
@@ -36,4 +38,14 @@ public class SubastaClienteController implements ActionListener{
     public SubastaCliente getVista() {
         return vista;
     }
+
+    public Oferente getModelo() {
+        return modelo;
+    }
+
+    public int getIdSubasta() {
+        return idSubasta;
+    }
+    
+    
 }

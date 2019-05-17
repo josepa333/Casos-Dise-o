@@ -8,7 +8,7 @@ import subastas.Subastador;
 
 public class Tabla {
     
-    public void ver_tabla(JTable pTabla,ArrayList<Subastador> subastadores){
+    public void ver_tabla(JTable pTabla,ArrayList<ArrayList<String>> subastadores){
         
         pTabla.setDefaultRenderer(Object.class, new Render());
         DefaultTableModel tablaPredeterminada = new DefaultTableModel(){
@@ -30,10 +30,10 @@ public class Tabla {
             
         if(subastadores.size() > 0){
             for(int i=0; i<subastadores.size(); i++){
-                fila[0] = subastadores.get(i).getIdSubastador();
-                fila[1] = subastadores.get(i).getSubasta().getProducto().getNombre();
-                fila[2] = subastadores.get(i).getSubasta().getProducto().getPrecioFinal();
-                fila[3] = subastadores.get(i).getSubasta().getStatus();
+                fila[0] = subastadores.get(i).get(0);
+                fila[1] = subastadores.get(i).get(1);
+                fila[2] =subastadores.get(i).get(2);
+                fila[3] = subastadores.get(i).get(3);
                 fila[4] = botonUnirse;
                 tablaPredeterminada.addRow(fila);
             }
@@ -48,5 +48,6 @@ public class Tabla {
         }
         pTabla.setModel(tablaPredeterminada);
         pTabla.setRowHeight(30);
+        pTabla.repaint();
     }
 }

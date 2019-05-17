@@ -5,33 +5,43 @@
  */
 package subastas;
 
+import client_server_API.Client;
+import client_server_API.Message;
 import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import subastasViews.SubastaClienteController;
+import subastasViews.SubastasController;
 
 /**
  *
  * @author jose pablo
  */
-public class Oferente extends IServidor{ //Tener un arreglo de ControlerSubasta, que tiene al modelo y a la vista
-    //recorro la madre buscando la que calze con ese id y le mando la vara.
+public class Oferente extends Client {
     
-    
+    private ArrayList<SubastaClienteController> subastas;
     private String idOferente;
-    private Conexion miConexion; 
-
-    private String idSubastador;
-    private SubastaClienteController controller;
+    private OferenteConnection miConexion; 
+    private SubastasController controller;
     
     static XStream xstream;
     static String xml;
     
-    public Oferente(String idOferente, SubastaClienteController controller) {
+    public Oferente(String idOferente, SubastasController controller) {
+        super(null, null);
+        String ipServerServer = "localhost"; //"172.19.51.112";
         this.idOferente = idOferente;
-        miConexion = miConexion = new Conexion("172.19.51.112", 6565); //TODO definir server
         this.controller = controller;
+        this.subastas = new ArrayList();
+        xstream = new XStream(new DomDriver());
+        try{
+            miConexion = new OferenteConnection(ipServerServer,controller);
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 
     public String getIdOferente() {
@@ -41,94 +51,27 @@ public class Oferente extends IServidor{ //Tener un arreglo de ControlerSubasta,
     public void setIdOferente(String idOferente) {
         this.idOferente = idOferente;
     }
+    
+    public void enviarOferta(String valor, int idSubasta){
+        ArrayList<String> data = new ArrayList();
+        data.add(Integer.toString(idSubasta));
+        data.add(valor);
+        miConexion.sendMessage(new Message(3,xstream.toXML(data),idOferente));
+    }
+    public void addSubasta(SubastaClienteController subasta){
+        subastas.add(subasta);
+        miConexion.sendMessage(new Message(6, Integer.toString(subasta.getIdSubasta()),idOferente)); //Fijo lo termino usando 
+    }
 
-    @Override
-    public void procesarConexion() throws IOException, ClassNotFoundException{
-        Mensaje mensaje = leerMensaje();
-        
-        if(null == mensaje.getTipo()) {
-            System.out.println("No se reconocio el tipo de mensaje");
-        }
-        else switch (mensaje.getTipo()) {
-            case ACEPTAROFERTA:
-                ofertaAceptada(" aceptada", mensaje);
-                break;
-            case RECHAZAROFERTA:
-                ofertaAceptada(" rechazada",mensaje);
-                break;
-            case SUBASTAFINALIZADA:
-                subastaFinalizada("La subasta ha finalizado", mensaje);  //Donde esta el feed?
-                break;
-            case SUBASTACANCELADA:
-                subastaFinalizada("La subasta ha sido cancelada", mensaje); //Donde esta el feed?
-                break;
-            default:
-                System.out.println("No se reconocio el tipo de mensaje"); 
-                break;
-        }
+    public ArrayList<SubastaClienteController> getSubastas() {
+        return subastas;
+    }
+
+    public void setSubastas(ArrayList<SubastaClienteController> subastas) {
+        this.subastas = subastas;
     }
     
-    private void ofertaAceptada(String condicion, Mensaje mensaje){
-        controller.getVista().feedArea.setText("La oferta ha sido " + condicion);
-    }
     
-    private void subastaFinalizada(String condicion, Mensaje mensaje){
-        controller.getVista().feedArea.setText(condicion);
-    }
     
-    public String unirseSubasta(String idSubastador){
-        Mensaje miMensaje = new Mensaje(TipoMensaje.UNIRSESUBASTA, idOferente ,idSubastador);
-        Mensaje resultado = null;
-        this.idSubastador = idSubastador;
-        try {
-            miConexion.abrirConexion();
-            miConexion.obtenerFlujos();
-            miConexion.enviarMensaje(miMensaje);
-            resultado = miConexion.recibirMensaje();
-            miConexion.cerrarConexion();
-        }
-        catch (IOException e) {
-            System.out.println(e);
-        }
-        return resultado.getCuerpo();
-    }
-    
-    public ArrayList<Subastador> cargarSubastadores(){
-        Mensaje miMensaje = new Mensaje(TipoMensaje.CONSULTASUBASTA, idOferente ,"");
-        Mensaje resultado = null;
-        try {
-            miConexion.abrirConexion();
-            miConexion.obtenerFlujos();
-            miConexion.enviarMensaje(miMensaje);
-            resultado = miConexion.recibirMensaje();
-            miConexion.cerrarConexion();
-        }
-        catch (IOException e) {
-            System.out.println(e);
-        }
-        return obtenerSubastadoresDeXml(resultado);
-    }
-    
-    private ArrayList<Subastador> obtenerSubastadoresDeXml(Mensaje datos){
-        ArrayList<String> subastadoresXML = (ArrayList<String>) xstream.fromXML(datos.getCuerpo());
-        ArrayList<Subastador> resultado = new ArrayList();
-        for (int i = 0; i < subastadoresXML.size(); i++) {
-            resultado.add((Subastador) xstream.fromXML(subastadoresXML.get(i)) );
-        }
-        return resultado;
-    }
-    
-    public void enviarOferta(String valorOferta){
-        Mensaje miMensaje = new Mensaje(TipoMensaje.OFERTA, idOferente ,
-        xstream.toXML(new ArrayList<>(Arrays.asList(valorOferta, idSubastador))));
-        try {
-            miConexion.abrirConexion();
-            miConexion.obtenerFlujos();
-            miConexion.enviarMensaje(miMensaje);
-            miConexion.cerrarConexion();
-        }
-        catch (IOException e) {
-            System.out.println(e);
-        }
-    }
+ 
 }

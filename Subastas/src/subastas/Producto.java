@@ -12,13 +12,13 @@ package subastas;
 public class Producto {
     
     private String nombre;
-    private double precioInicial;
-    private double precioFinal;
+    private String precioInicial;
+    private String precioFinal;
 
     public Producto(String nombre, String precioInicial) {
         this.nombre = nombre;
-        this.precioInicial = Double.parseDouble(precioInicial);
-        this.precioFinal = 0;
+        this.precioInicial = precioInicial;
+        this.precioFinal = "0";
     }
 
     public String getNombre() {
@@ -29,19 +29,19 @@ public class Producto {
         this.nombre = nombre;
     }
 
-    public double getPrecioInicial() {
+    public String getPrecioInicial() {
         return precioInicial;
     }
 
-    public void setPrecioInicial(double precioInicial) {
+    public void setPrecioInicial(String precioInicial) {
         this.precioInicial = precioInicial;
     }
 
-    public double getPrecioFinal() {
+    public String getPrecioFinal() {
         return precioFinal;
     }
 
-    public void setPrecioFinal(double precioFinal) {
+    public void setPrecioFinal(String precioFinal) {
         this.precioFinal = precioFinal;
     }
     

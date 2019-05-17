@@ -5,6 +5,7 @@
  */
 package subastasViews;
 
+import client_server_API.AbstractObservable;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -18,7 +19,8 @@ public class SubastasController implements MouseListener{
     private ListaSubastas vista;
     private String idCliente;
     Tabla tablaBase = new Tabla();
-    private ArrayList<Subastador> subastadores;
+    private ArrayList<ArrayList<String>> subastadores;
+    public Oferente oferente;
     
     public SubastasController(String idCliente) {
         this.idCliente = idCliente;
@@ -27,13 +29,13 @@ public class SubastasController implements MouseListener{
         vista.setLocationRelativeTo(null);
         this.vista.TablaSubastas.addMouseListener(this);
         vista.idUsuario.setText(idCliente);
-        cargarTabla();
+        oferente = new Oferente(idCliente, this);
     }
     
-    private void cargarTabla(){
-        Oferente tmpOferente = new Oferente("Temporal", null);
-        subastadores = tmpOferente.cargarSubastadores();
-        tablaBase.ver_tabla(vista.TablaSubastas, subastadores);
+    public void cargarTabla(ArrayList<ArrayList<String>> subastadoresXML){
+        subastadores = (ArrayList<ArrayList<String>>) subastadoresXML;
+        System.out.println("Ok pa, si entro");
+        tablaBase.ver_tabla(vista.TablaSubastas, subastadoresXML);
     }
     
     @Override
@@ -55,7 +57,8 @@ public class SubastasController implements MouseListener{
                 switch (column) {
                     case 4:
                         System.out.println("Print heehee"); 
-                         SubastaClienteController controler = new SubastaClienteController(idCliente,subastadores.get(row).getIdSubastador() );
+                         oferente.addSubasta(new SubastaClienteController(idCliente,oferente,
+                                 Integer.parseInt(subastadores.get(row).get(0))));
                         break; 
                 }
                 System.out.println(row);
