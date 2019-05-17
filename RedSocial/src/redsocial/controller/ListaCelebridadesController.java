@@ -5,6 +5,9 @@
  */
 package redsocial.controller;
 
+import client_server_API.Message;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -12,6 +15,7 @@ import javax.swing.JButton;
 import redsocial.view.ListaCelebridadesView;
 import redsocial.model.Seguidor;
 import redsocial.model.MensajeVip;
+import redsocial.model.SeguidorConexion;
 import redsocial.model.Vip;
 /**
  *
@@ -19,31 +23,26 @@ import redsocial.model.Vip;
  */
 public class ListaCelebridadesController implements MouseListener{
     
-    private ListaCelebridadesView vista;
+    public ListaCelebridadesView vista;
     private String idCliente;
-    TablaCelebridad tablaCelebridades = new TablaCelebridad();
-    TablaMensajes tablaMensajes = new TablaMensajes();
+    public TablaCelebridad tablaCelebridades = new TablaCelebridad();
+    public TablaMensajes tablaMensajes = new TablaMensajes();
+    public SeguidorConexion sc;
+    private Integer observableActual = 0;
 
     
-    public ListaCelebridadesController(String idCliente, String Ip) {
+    public ListaCelebridadesController(String idCliente,SeguidorConexion sc) {
         this.idCliente = idCliente;
         vista = new ListaCelebridadesView();
         vista.setVisible(true);
         vista.setLocationRelativeTo(null);
         this.vista.TablaMensajes.addMouseListener(this);
         this.vista.TablaCelebridades.addMouseListener(this);
-        cargarTabla(new ArrayList());
-    }
-    
-    private void cargarTabla(ArrayList<Vip> datos){
-        Vip tmpOferente = new Vip("Temporal");
-        Vip tmpOferente2 = new Vip("Temporal 2");
+        this.sc = sc;
+        sc.sendMessage(new Message(10,"",""));
 
-        datos = new ArrayList(); //temporal
-        datos.add(tmpOferente);
-        datos.add(tmpOferente2);
-        tablaCelebridades.ver_tabla(vista.TablaCelebridades, datos);
     }
+
     
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -61,9 +60,19 @@ public class ListaCelebridadesController implements MouseListener{
                     boton.doClick();
                     if(boton.getText().equals("Like")){ //Like
                         System.out.println("like");
+                        ArrayList<String> datos = new ArrayList();
+                        datos.add(String.valueOf(observableActual));
+                        datos.add(String.valueOf(row));
+                        XStream xml = new XStream(new DomDriver());
+                        sc.sendMessage(new Message(3, xml.toXML(datos), idCliente));
                     }
                     else{ //Dislike
                         System.out.println("dislike");
+                        ArrayList<String> datos = new ArrayList();
+                        datos.add(String.valueOf(observableActual));
+                        datos.add(String.valueOf(row));
+                        XStream xml = new XStream(new DomDriver());
+                        sc.sendMessage(new Message(4, xml.toXML(datos), idCliente));
                     }
                 }
             }
@@ -80,11 +89,18 @@ public class ListaCelebridadesController implements MouseListener{
                     JButton boton = (JButton) value;
                     boton.doClick();
                     if(boton.getText().equals("Seguir")){
-                    System.out.println("Siguiendo al artista :" + vista.TablaCelebridades.getValueAt(row, 0));}
+                    System.out.println("Siguiendo al artista :" + vista.TablaCelebridades.getValueAt(row, 0));
+                    ArrayList<String> datos = new ArrayList();
+                    datos.add((String)vista.TablaCelebridades.getValueAt(row, 2));
+                    datos.add((String)vista.TablaCelebridades.getValueAt(row, 0));
+                    XStream xml = new XStream(new DomDriver());
+                    sc.sendMessage(new Message(1, xml.toXML(datos), idCliente));
+                    }
                     else{
                         System.out.println("Viendo mensajes del artista :" + vista.TablaCelebridades.getValueAt(row, 0));
-                        tablaMensajes.ver_tabla(vista.TablaMensajes, new ArrayList());
+                        sc.sendMessage(new Message(9, (String)vista.TablaCelebridades.getValueAt(row, 2), idCliente));
                     }
+                    observableActual = Integer.parseInt((String)vista.TablaCelebridades.getValueAt(row, 2));
                 }
             }
         }

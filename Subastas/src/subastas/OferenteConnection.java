@@ -27,13 +27,13 @@ public class OferenteConnection extends Connection{
     public OferenteConnection(String servername, SubastasController oferenteController ) throws Exception {
         super(servername, 9999);
         this.oferenteController = oferenteController;
-        xstream = new XStream(new DomDriver());
         System.out.println( "aaaaaaa = " + clientSocket.getInetAddress() );
         sendMessage(new Message(2,"",""));
     }
     
     @Override
     public void processConnection(Message message){
+        xstream = new XStream(new DomDriver());
         TipoMensaje tipo = TipoMensaje.values()[message.getType()];
         System.out.println("la jugada papi tosti es la siguiente: " + message.getContent() + Integer.toString(message.getType()));
         switch (tipo) {

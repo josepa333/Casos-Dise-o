@@ -5,6 +5,7 @@
  */
 package redsocial.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -13,7 +14,7 @@ import java.util.Date;
  *
  * @author Angelo PC
  */
-public class MensajeVip {
+public class MensajeVip implements Serializable{
     private Date fecha;
     private String contenido;
     private ArrayList<String> likes;
@@ -89,4 +90,11 @@ public class MensajeVip {
             this.likes.remove(seguidor);
         }
     }
+
+    @Override
+    public String toString() {
+        return "fecha=" + fecha + ", contenido=" + contenido + ", likes=" + Integer.toString(likes.size()) + ", dislikes=" + Integer.toString(dislikes.size()) + ", idMensaje=" + idMensaje;
+    }
+    
+    
 }
