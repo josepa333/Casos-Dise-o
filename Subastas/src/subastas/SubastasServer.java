@@ -6,11 +6,7 @@ import client_server_API.Message;
 import client_server_API.Server;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 public class SubastasServer extends Server{
@@ -35,6 +31,7 @@ public class SubastasServer extends Server{
                 observable.setData(tmpArrayList);
                 addObservable(observable);
                 observable.notifyAllObservers(new Message(1,Integer.toString( observable.getIdObservable() ), ""));
+                observable.getData().set(0, Integer.toString(observable.getIdObservable()) );
                 break;
             case CONSULTASUBASTA:
                 AbstractObservable tmpObservable =  new AbstractObservable();
@@ -56,24 +53,30 @@ public class SubastasServer extends Server{
                 tmpOfertaRechazada.notifyAllObservers(new Message(5,"Se rechazó la oferta de "+message.getUser(),message.getContent()) );
                 break;
           case ACEPTAROFERTA:
-            
-                AbstractObservable tmpOfertaAceptada = findObservable( Integer.parseInt(message.getContent() ));
-                tmpOfertaAceptada.notifyAllObservers(new Message(5,"Se aceptó la oferta de "+message.getUser(),message.getContent()) );
+                ArrayList<String> dataAceptar = (ArrayList<String>) xstream.fromXML(message.getContent());
+                AbstractObservable tmpOfertaAceptada = findObservable( Integer.parseInt(dataAceptar.get(0)));
+                tmpOfertaAceptada.getData().set(3, dataAceptar.get(1));
+                tmpOfertaAceptada.notifyAllObservers(new Message(5,"Se aceptó la oferta de "+dataAceptar.get(1),message.getContent()) );
+                tmpOfertaAceptada.getData().add( message.getUser() );
                 break;
           case UNIRSESUBASTA:
               addObserver(findObservable(Integer.parseInt(message.getContent())), new Client(this.output, this.clientInetAddress));
-              findObservable(Integer.parseInt(message.getContent())).notifyAllObservers(new Message(5,
+              findObservable(Integer.parseInt(message.getContent())).notifyAllObservers(new Message(6,
               "Se ha unido a la subasta: " + message.getUser(), message.getContent() ));
                 break;
          case SUBASTACANCELADA:
              System.out.println("Cancelamos la oferta");
               findObservable(Integer.parseInt(message.getContent())).notifyAllObservers(new Message(5,
               "La subasta ha sido cancelada", message.getContent() ));
+              findObservable(Integer.parseInt(message.getContent())).getData().set(4, "Cancelada");
                 break;
           case SUBASTAFINALIZADA:
               System.out.println("finalizamos la oferta ");
-              findObservable(Integer.parseInt(message.getContent())).notifyAllObservers(new Message(5,
-              "La subasta ha finalizado con un monto de: " + message.getUser(), message.getContent() ));
+              AbstractObservable tmpObservableFinalizar = findObservable(Integer.parseInt(message.getContent()));
+              tmpObservableFinalizar.notifyAllObservers(new Message(5,
+              "La subasta ha finalizado con un monto de: " + message.getUser()+"\n, " + 
+                      "felicidades al ganador: " + tmpObservableFinalizar.getData().get(5) , message.getContent() ));
+              tmpObservableFinalizar.getData().set(4, "Finalizada");
                 break;
             default:
                 System.out.println("No se reconocio el tipo de mensaje");

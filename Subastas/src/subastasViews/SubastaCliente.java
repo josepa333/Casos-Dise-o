@@ -36,7 +36,7 @@ public class SubastaCliente extends javax.swing.JFrame {
 
         feedArea.setColumns(20);
         feedArea.setRows(5);
-        feedArea.setText("ME CAGO EN MI VIDA!");
+        feedArea.setText(".");
         jScrollPane1.setViewportView(feedArea);
 
         ofertarButton.setText("Ofertar");

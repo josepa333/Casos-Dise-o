@@ -57,8 +57,10 @@ public class SubastasController implements MouseListener{
                 switch (column) {
                     case 4:
                         System.out.println("Print heehee"); 
-                         oferente.addSubasta(new SubastaClienteController(idCliente,oferente,
+                        if(subastadores.get(row).get(4).equals("Activa") ){
+                            oferente.addSubasta(new SubastaClienteController(idCliente,oferente,
                                  Integer.parseInt(subastadores.get(row).get(0))));
+                        }
                         break; 
                 }
                 System.out.println(row);

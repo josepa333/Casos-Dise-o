@@ -18,7 +18,7 @@ public class Producto {
     public Producto(String nombre, String precioInicial) {
         this.nombre = nombre;
         this.precioInicial = precioInicial;
-        this.precioFinal = "0";
+        this.precioFinal = precioInicial;
     }
 
     public String getNombre() {

@@ -42,6 +42,12 @@ public class SubastaSubastadorController implements ActionListener { //Todo mete
                break;
        }
     }
+
+    public SubastaSubastador getVista() {
+        return vista;
+    }
+    
+    
     
     
     

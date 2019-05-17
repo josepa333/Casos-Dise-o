@@ -6,12 +6,10 @@
 package subastas;
 
 import client_server_API.AbstractObservable;
-import client_server_API.Connection;
 import client_server_API.Message;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-import java.util.ArrayList;
-import static subastas.Oferente.xstream;
+import java.util.ArrayList; 
 import subastasViews.SubastaSubastadorController;
 
 /**
@@ -74,5 +72,8 @@ public class Subastador extends AbstractObservable{ //TODO Hacerlo observer
         data.add(subasta.getStatus());
         connection.sendMessage(new Message(1,  xstream.toXML( data  ) ,idSubastador));
     }
-    
+
+    public SubastaSubastadorController getController( ) {
+        return this.controller;
+    }    
 }

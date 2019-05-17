@@ -30,10 +30,10 @@ public class Tabla {
             
         if(subastadores.size() > 0){
             for(int i=0; i<subastadores.size(); i++){
-                fila[0] = subastadores.get(i).get(0);
-                fila[1] = subastadores.get(i).get(1);
-                fila[2] =subastadores.get(i).get(2);
-                fila[3] = subastadores.get(i).get(3);
+                fila[0] = subastadores.get(i).get(1);
+                fila[1] = subastadores.get(i).get(2);
+                fila[2] =subastadores.get(i).get(3);
+                fila[3] = subastadores.get(i).get(4);
                 fila[4] = botonUnirse;
                 tablaPredeterminada.addRow(fila);
             }

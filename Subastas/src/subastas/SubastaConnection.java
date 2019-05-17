@@ -34,7 +34,7 @@ public class SubastaConnection extends Connection{
         xstream = new XStream(new DomDriver());
         switch (tipo) {
             case INICIARSUBASTA://Ocupo el mensaje que me diga el id 
-                System.out.println("Nueva subasta con id:\n" + message.getContent());
+                System.out.println("Nueva subasta con id: " + message.getContent());
                 subastador.setIdObservable(Integer.parseInt(message.getContent()));
                 break;
             case OFERTA://Ocupo el mensaje que me diga el id 
@@ -47,19 +47,28 @@ public class SubastaConnection extends Connection{
                     mensajeResultado = new Message(4, data.get(0),data.get(1));
                 }
                 else{
-                    mensajeResultado = new Message(5, data.get(0),data.get(1));
+                    mensajeResultado = new Message(5, xstream.toXML(data) ,message.getUser());
                     subastador.getSubasta().pujar(data.get(1));
+                    String tmpString = subastador.getController().getVista().feedTextArea.getText();
+                    System.out.println("En al caja hay: " + subastador.getController().getVista().feedTextArea.getText());
+                    subastador.getController().getVista().feedTextArea.setText( 
+                            tmpString + "\nSe ha aceptado la oferta de " + message.getUser() + "de" + data.get(1));
                 }
                 sendMessage(mensajeResultado);
                 break;
-                         case SUBASTACANCELADA:
+            case  UNIRSESUBASTA:
+              String tmpString = subastador.getController().getVista().feedTextArea.getText();
+              subastador.getController().getVista().feedTextArea.setText( 
+                            tmpString +"\n" + message.getContent() );
+              break;
+            case SUBASTACANCELADA:
              System.out.println("andalewei");
                 break;
           case SUBASTAFINALIZADA:
               System.out.println("chingatumadre");
                 break;
             default:
-                System.out.println("No se reconocio el tipo de mensaje");
+                System.out.println("No se reconocio el tipo de mensaje");                
                 break;
         }
     }

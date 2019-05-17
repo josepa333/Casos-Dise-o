@@ -9,9 +9,7 @@ import client_server_API.Client;
 import client_server_API.Message;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import subastasViews.SubastaClienteController;
 import subastasViews.SubastasController;
 

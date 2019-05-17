@@ -26,7 +26,7 @@ public class Subasta{
     public Subasta(String finalProgramado, Producto producto){
         this.inicio = new Date();
         this.producto = producto;
-        this.status = "activa";
+        this.status = "Activa";
         this.feed = "";
         try{
         this.finalProgramado = new SimpleDateFormat("dd/MM/yyyy").parse(finalProgramado);

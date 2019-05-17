@@ -42,10 +42,10 @@ public class OferenteConnection extends Connection{
                 System.out.println(message.getContent());
                 oferenteController.cargarTabla((ArrayList<ArrayList<String>>) xstream.fromXML(message.getContent()));
                 break;
-                
+               
             case ACEPTAROFERTA://Ocupo el mensaje que me diga el id 
                 for(SubastaClienteController controller: oferenteController.oferente.getSubastas()){
-                    if(controller.getIdSubasta() == Integer.parseInt(message.getUser()) ){
+                    if(controller.getIdSubasta() == Integer.parseInt(   ((ArrayList<String>) xstream.fromXML(message.getUser())).get(0) ) ){
                         String feed  = controller.getVista().feedArea.getText();
                         controller.getVista().feedArea.setText(feed + message.getContent() + "\n" );
                         break;
@@ -53,6 +53,14 @@ public class OferenteConnection extends Connection{
                 }
                 
                 break;
+            case  UNIRSESUBASTA:
+                for(SubastaClienteController controller: oferenteController.oferente.getSubastas()){
+                    if(controller.getIdSubasta() ==  Integer.parseInt(message.getUser()))   {
+                        String feed  = controller.getVista().feedArea.getText();
+                        controller.getVista().feedArea.setText(feed + message.getContent() + "\n" );
+                        break;
+                    }
+                }
             default:
                 System.out.println("No se reconocio el tipo de mensaje");
                 break;
