@@ -5,13 +5,14 @@
  */
 package redsocial.model;
 
+import clientserverapi.Client;
 import java.io.IOException;
 
 /**
  *
  * @author Angelo PC
  */
-public class Seguidor extends IServidor{
+public class Seguidor extends Client{
     private String idSeguidor;
 
     public Seguidor(String idSeguidor) {

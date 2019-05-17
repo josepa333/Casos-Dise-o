@@ -5,6 +5,7 @@
  */
 package redsocial.model;
 
+import clientserverapi.AbstractObservable;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -12,7 +13,7 @@ import java.util.ArrayList;
  *
  * @author Angelo PC
  */
-public class Vip extends IServidor{
+public class Vip extends AbstractObservable{
     private ArrayList<MensajeVip> mensajes;
     private ArrayList<Seguidor> seguidores;
     private String id;

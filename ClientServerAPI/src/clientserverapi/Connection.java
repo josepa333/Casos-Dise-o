@@ -28,7 +28,7 @@ public class Connection extends Thread{
     private String serverIPAddress;
     private int serverPort;
     
-    private Connection(String serverIPAddress, int serverPort, int clientPort) {
+    public Connection(String serverIPAddress, int serverPort, int clientPort) {
         this.serverIPAddress = serverIPAddress;
         this.serverPort = serverPort;
         this.clientPort = clientPort;

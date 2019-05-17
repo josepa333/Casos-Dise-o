@@ -4,19 +4,17 @@
  * and open the template in the editor.
  */
 package redsocial;
+
 import clientserverapi.Connection;
-import redsocial.controller.InicioController;
+
 /**
  *
  * @author Angelo PC
  */
-public class RedSocial{
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        InicioController lcc = new InicioController();
+public class ConnectionHandler extends Connection{
+    
+    private ConnectionHandler(){
+        super()
     }
     
 }
