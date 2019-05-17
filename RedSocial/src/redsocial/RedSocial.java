@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 package redsocial;
-import clientserverapi.Connection;
 import redsocial.controller.InicioController;
 /**
  *

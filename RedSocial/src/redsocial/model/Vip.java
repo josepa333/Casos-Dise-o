@@ -5,8 +5,7 @@
  */
 package redsocial.model;
 
-import clientserverapi.AbstractObservable;
-import java.io.IOException;
+import client_server_API.AbstractObservable;
 import java.util.ArrayList;
 
 /**
@@ -58,21 +57,12 @@ public class Vip extends AbstractObservable{
    
     
     public void darDeBaja(){
-        closeConnection();
     }
     
     public void postearMensaje(String mensaje){
         mensajes.add(mensajes.size(),new MensajeVip(mensaje,mensajes.size()));
     }
-       
-    private void closeConnection(){
-        //TODO
-    }
-    
-    public void agregarSeguidor(){
-        //TODO
-    }
-    
+
     public void likeMensaje(int idMensaje,String idUsuario){
         mensajes.get(idMensaje).agregarLike(idUsuario);
     }
@@ -80,9 +70,5 @@ public class Vip extends AbstractObservable{
     public void dislikeMensaje(int idMensaje,String idUsuario){
         mensajes.get(idMensaje).agregarDislike(idUsuario);
     }
-
-    @Override
-    public void procesarConexion() throws IOException, ClassNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 }

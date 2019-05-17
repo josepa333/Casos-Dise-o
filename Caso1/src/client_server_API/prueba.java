@@ -3,18 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package redsocial;
-
-import clientserverapi.Connection;
+package client_server_API;
 
 /**
  *
  * @author Angelo PC
  */
-public class ConnectionHandler extends Connection{
-    
-    private ConnectionHandler(){
-        super()
-    }
+public class prueba {
     
 }
