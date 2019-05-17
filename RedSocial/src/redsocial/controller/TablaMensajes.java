@@ -32,12 +32,6 @@ public class TablaMensajes {
                 tablaPredeterminada.addRow(fila);
             }
         }
-        else{
-            fila[0] = "";
-            fila[1] = botonLike;
-            fila[2] = botonDislike;
-            tablaPredeterminada.addRow(fila);
-        }
         pTabla.setModel(tablaPredeterminada);
         pTabla.setRowHeight(30);
         pTabla.repaint();

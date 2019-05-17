@@ -74,6 +74,8 @@ public class ListaCelebridadesController implements MouseListener{
                         XStream xml = new XStream(new DomDriver());
                         sc.sendMessage(new Message(4, xml.toXML(datos), idCliente));
                     }
+                    sc.sendMessage(new Message(9, (String)vista.TablaCelebridades.getValueAt(observableActual, 2), idCliente));
+
                 }
             }
         }
@@ -103,6 +105,9 @@ public class ListaCelebridadesController implements MouseListener{
                     observableActual = Integer.parseInt((String)vista.TablaCelebridades.getValueAt(row, 2));
                 }
             }
+        
+            sc.sendMessage(new Message(10,"",""));
+
         }
     } 
 

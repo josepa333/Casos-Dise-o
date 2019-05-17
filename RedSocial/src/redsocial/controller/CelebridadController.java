@@ -43,8 +43,7 @@ public class CelebridadController implements ActionListener{
     
     if (null != button) {
         if(button.getText().equals("Darse de Baja")){
-            vc.sendMessage(new Message(3, String.valueOf(vc.vip.getIdObservable()),vc.vip.getUser()));
-
+            vc.sendMessage(new Message(5, String.valueOf(vc.vip.getIdObservable()),vc.vip.getUser()));
         }
         else{
             String mensaje = vista.textoCuerpoMensaje.getText();
@@ -55,7 +54,7 @@ public class CelebridadController implements ActionListener{
             System.out.println("Enviando mensaje...");
             ArrayList<String> datos = new ArrayList<>();
             datos.add(String.valueOf(vc.vip.getIdObservable()));
-            datos.add(vc.vip.addMensaje(mensaje));
+            datos.add(vc.vip.getUser() + ": "+vc.vip.addMensaje(mensaje));
             XStream xml = new XStream(new DomDriver());
 
             vc.sendMessage(new Message(6,xml.toXML(datos),vc.vip.getUser()));

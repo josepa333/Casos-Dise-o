@@ -10,6 +10,7 @@ import client_server_API.Message;
 import client_server_API.Server;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
+import java.net.Socket;
 import java.util.ArrayList;
 /**
  *
@@ -22,6 +23,22 @@ public class RedSocialServer extends Server {
     }
     
     @Override
+    public void process() throws Exception  {
+        System.out.println("\n\n++++++++++++++++++++++++++++++++++++");
+        System.out.println("Esperando una Conexión... Proccess Override");
+        while( true) {
+           this.connection = this.serverSocket.accept();
+           Handler c = new Handler(this.connection);
+           System.out.println("Conectado a :" + connection.getInetAddress().getHostName());
+        }
+    }
+    public class Handler extends Server.HandleClient{
+        
+        public Handler(Socket client) throws Exception{
+            super(client);
+        }
+
+        @Override
      public boolean processConnection(Message message){
         boolean flag = true;
         XStream xstream = new XStream(new DomDriver());
@@ -121,6 +138,8 @@ public class RedSocialServer extends Server {
         }
          return true;
      }
+    
+    }
         public static void main(String ... args) throws Exception {
         RedSocialServer server = new RedSocialServer(9999);
     } 
