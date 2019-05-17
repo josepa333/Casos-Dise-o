@@ -10,6 +10,8 @@ import java.awt.*;
 import java.awt.event.*;
 import static java.lang.System.out;
 
+
+
 public class  Connection{
     private ObjectOutputStream output;
     private ObjectInputStream input;
@@ -22,6 +24,7 @@ public class  Connection{
         this.input = new ObjectInputStream(this.clientSocket.getInputStream());
         new ConnectionThread().start();  // create thread for listening for messages
     }
+    
     
     public void sendMessage(Message message) {
         try {

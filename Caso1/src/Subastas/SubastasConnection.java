@@ -9,6 +9,7 @@ import client_server_API.Message;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.DomDriver;
 import static java.lang.System.out;
+import subastasViews.InicioSesion;
 
 /**
  *
@@ -25,12 +26,15 @@ public class SubastasConnection extends Connection{
     
         String servername = "localhost";  
         try {
+            //InicioSesion ventanaPrincipal = new InicioSesion();
+            //ventanaPrincipal.show();
             XStream xstream = new XStream(new DomDriver());
             Connection client = new Connection(servername, 9999);
             AbstractObservable subasta = new Subasta();
             String XML = xstream.toXML(subasta);
             client.sendMessage(new Message(1, XML, "BadBunny"));
 //            client.sendMessage(new Message(2, "1", "BadBunny"));
+
             
         } catch(Exception ex) {
             out.println( "Error --> " + ex.getMessage());

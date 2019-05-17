@@ -18,4 +18,5 @@ public class SubastasServer extends Server{
     public static void main(String ... args) throws Exception {
         Server server = Server.getInstance(9999);
     } // end of main
+    
 }

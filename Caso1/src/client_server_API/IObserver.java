@@ -9,6 +9,8 @@ package client_server_API;
  *
  * @author Ricardo Bonilla
  */
+
+
 public interface IObserver {
     public void notifyObserver(Message message);
 }
