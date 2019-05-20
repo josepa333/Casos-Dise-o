@@ -57,6 +57,11 @@ public class MainWindow extends javax.swing.JFrame {
         newFileButton.setText("New");
         newFileButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         newFileButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        newFileButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                newFileButtonActionPerformed(evt);
+            }
+        });
         jToolBar1.add(newFileButton);
 
         openFileButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/openDocument.png"))); // NOI18N
@@ -196,6 +201,10 @@ public class MainWindow extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_SaveAsButtonActionPerformed
 
+    private void newFileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newFileButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_newFileButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -232,22 +241,22 @@ public class MainWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton RedoButton;
-    private javax.swing.JButton SaveAsButton;
-    private javax.swing.JTextArea TextArea;
-    private javax.swing.JButton copyButton;
-    private javax.swing.JButton cutButton;
+    public javax.swing.JButton RedoButton;
+    public javax.swing.JButton SaveAsButton;
+    public javax.swing.JTextArea TextArea;
+    public javax.swing.JButton copyButton;
+    public javax.swing.JButton cutButton;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JToolBar jToolBar2;
     private javax.swing.JToolBar jToolBar3;
     private javax.swing.JToolBar jToolBar4;
-    private javax.swing.JButton newFileButton;
-    private javax.swing.JButton openFileButton;
-    private javax.swing.JButton pasteButton;
-    private javax.swing.JButton saveFileButton;
-    private javax.swing.JButton undoButton;
-    private javax.swing.JButton wordHighlightButton;
+    public javax.swing.JButton newFileButton;
+    public javax.swing.JButton openFileButton;
+    public javax.swing.JButton pasteButton;
+    public javax.swing.JButton saveFileButton;
+    public javax.swing.JButton undoButton;
+    public javax.swing.JButton wordHighlightButton;
     // End of variables declaration//GEN-END:variables
 }
