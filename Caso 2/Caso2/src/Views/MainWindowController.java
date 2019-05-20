@@ -5,17 +5,22 @@
  */
 package Views;
 
+import Model.IStrategy;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 /**
  *
  * @author jose pablo
  */
-public class MainWindowController implements KeyListener, ActionListener{
+public class MainWindowController implements KeyListener, ActionListener, MouseListener{
 
     private MainWindow view;
+    private IStrategy textProcessor;
     
     public MainWindowController() {
         view = new MainWindow();
@@ -31,7 +36,32 @@ public class MainWindowController implements KeyListener, ActionListener{
         view.copyButton.addActionListener(this);
         view.cutButton.addActionListener(this);
         view.pasteButton.addActionListener(this);
-        
+        view.TextArea.addMouseListener(this);
+    }
+    
+    
+    @Override
+    public void mousePressed(MouseEvent e) {
+    }
+    
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        if (view.TextArea.getSelectedText() != null) { // See if they selected something 
+            String s =view.TextArea.getSelectedText();
+        }
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+    }
+
+    
+    @Override
+    public void mouseClicked(MouseEvent e) {
     }
     
     public void keyPressed(KeyEvent event){
