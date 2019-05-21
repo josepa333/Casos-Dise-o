@@ -12,9 +12,6 @@ package Model;
  */
 public interface IStrategy {
     
-    public void processText(String text);
-    public String readFile(String file);
-    
-    
-    
+    public void processText(String text, String fileName);
+    public String readFile(String file);    
 }
