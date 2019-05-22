@@ -10,10 +10,19 @@ import Model.PDFTextProcessor;
 import Model.Text;
 import Model.TextCareTaker;
 import Model.TextMemento;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,12 +35,16 @@ public class MainWindowController implements KeyListener, ActionListener{
     private IStrategy textProcessor;
     private TextCareTaker caretaker;
     private Text generalText;
+    private String tmpString;
+    private Clipboard c;
+    private StringSelection testData;
     
     public MainWindowController() {
         caretaker = new TextCareTaker();
         generalText = new Text("");
         view = new MainWindow();
         view.show();
+         c = Toolkit.getDefaultToolkit().getSystemClipboard();
         
         view.TextArea.addKeyListener(this);
         view.newFileButton.addActionListener(this);
@@ -75,8 +88,7 @@ public class MainWindowController implements KeyListener, ActionListener{
                break;
            case "Save as":
                System.out.println("Save as");
-               PDFTextProcessor pdf = new PDFTextProcessor();
-               pdf.processText("<texto> Este es un ejemplo de lo crack que soy y solo para demostrarlo <RED>BOOOM, color</RED> mas?, ok <BLUE>BOOM</BLUE> gracias :) </texto>", "Jose");
+               
                break;
            case "Highlight":
                System.out.println("Highlight");
@@ -103,14 +115,28 @@ public class MainWindowController implements KeyListener, ActionListener{
                break;
            case "Copy":
                System.out.println("Copy");
+               testData = new StringSelection( view.TextArea.getSelectedText() );
+               c.setContents(testData, testData);
                break;
-//            String s =view.TextArea.getSelectedText();
-
            case "Cut":
-               System.out.println("Cut");
+               System.out.println("Cut");//Donde lo corto? 
+               testData = new StringSelection( view.TextArea.getSelectedText() );
+               c.setContents(testData, testData);
+               view.TextArea.replaceSelection("");
                break;
            case "Paste":
-               System.out.println("Paste");
+               System.out.println("Paste");//Donde lo pego? 
+               Transferable t = c.getContents( null );
+               try{
+                   if ( t.isDataFlavorSupported(DataFlavor.stringFlavor) ){
+                         Object o = t.getTransferData( DataFlavor.stringFlavor );
+                         String data = (String)t.getTransferData( DataFlavor.stringFlavor );
+                         view.TextArea.replaceSelection( data );
+                     }
+               }
+               catch(UnsupportedFlavorException | IOException f){
+                   System.out.println(f.getMessage());
+               }
                break;
            default:
                System.out.println("Khé");
