@@ -53,8 +53,10 @@ public class MainWindow extends javax.swing.JFrame {
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
 
+        newFileButton.setBackground(new java.awt.Color(85, 122, 149));
         newFileButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/newDocument.png"))); // NOI18N
         newFileButton.setText("New");
+        newFileButton.setBorderPainted(false);
         newFileButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         newFileButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         newFileButton.addActionListener(new java.awt.event.ActionListener() {
@@ -64,20 +66,26 @@ public class MainWindow extends javax.swing.JFrame {
         });
         jToolBar1.add(newFileButton);
 
+        openFileButton.setBackground(new java.awt.Color(85, 122, 149));
         openFileButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/openDocument.png"))); // NOI18N
         openFileButton.setText("Open");
+        openFileButton.setBorderPainted(false);
         openFileButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         openFileButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(openFileButton);
 
+        saveFileButton.setBackground(new java.awt.Color(85, 122, 149));
         saveFileButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/save.png"))); // NOI18N
         saveFileButton.setText("Save");
+        saveFileButton.setBorderPainted(false);
         saveFileButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         saveFileButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar1.add(saveFileButton);
 
+        SaveAsButton.setBackground(new java.awt.Color(85, 122, 149));
         SaveAsButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/saveAs.png"))); // NOI18N
         SaveAsButton.setText("Save as");
+        SaveAsButton.setBorderPainted(false);
         SaveAsButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         SaveAsButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         SaveAsButton.addActionListener(new java.awt.event.ActionListener() {
@@ -90,8 +98,10 @@ public class MainWindow extends javax.swing.JFrame {
         jToolBar2.setFloatable(false);
         jToolBar2.setRollover(true);
 
+        wordHighlightButton.setBackground(new java.awt.Color(85, 122, 149));
         wordHighlightButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/highlight.png"))); // NOI18N
         wordHighlightButton.setText("Highlight");
+        wordHighlightButton.setBorderPainted(false);
         wordHighlightButton.setFocusable(false);
         wordHighlightButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         wordHighlightButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -100,15 +110,19 @@ public class MainWindow extends javax.swing.JFrame {
         jToolBar3.setFloatable(false);
         jToolBar3.setRollover(true);
 
+        undoButton.setBackground(new java.awt.Color(85, 122, 149));
         undoButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/undo.png"))); // NOI18N
         undoButton.setText("Undo");
+        undoButton.setBorderPainted(false);
         undoButton.setFocusable(false);
         undoButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         undoButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar3.add(undoButton);
 
+        RedoButton.setBackground(new java.awt.Color(85, 122, 149));
         RedoButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/redo.png"))); // NOI18N
         RedoButton.setText("Redo");
+        RedoButton.setBorderPainted(false);
         RedoButton.setFocusable(false);
         RedoButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         RedoButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -117,22 +131,28 @@ public class MainWindow extends javax.swing.JFrame {
         jToolBar4.setFloatable(false);
         jToolBar4.setRollover(true);
 
+        copyButton.setBackground(new java.awt.Color(85, 122, 149));
         copyButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/copy.png"))); // NOI18N
         copyButton.setText("Copy");
+        copyButton.setBorderPainted(false);
         copyButton.setFocusable(false);
         copyButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         copyButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar4.add(copyButton);
 
+        cutButton.setBackground(new java.awt.Color(85, 122, 149));
         cutButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/cut.png"))); // NOI18N
         cutButton.setText("Cut");
+        cutButton.setBorderPainted(false);
         cutButton.setFocusable(false);
         cutButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         cutButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         jToolBar4.add(cutButton);
 
+        pasteButton.setBackground(new java.awt.Color(85, 122, 149));
         pasteButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/paste.png"))); // NOI18N
         pasteButton.setText("Paste");
+        pasteButton.setBorderPainted(false);
         pasteButton.setFocusable(false);
         pasteButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         pasteButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -171,7 +191,6 @@ public class MainWindow extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        TextArea.setBackground(new java.awt.Color(255, 255, 255));
         TextArea.setColumns(20);
         TextArea.setRows(5);
         TextArea.setCaretColor(new java.awt.Color(85, 122, 149));
