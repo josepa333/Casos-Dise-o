@@ -22,12 +22,12 @@ public class TextCareTaker {
     public void addNewMemento(TextMemento memento){
         if(states.size() < 20){
             states.add(memento);
+            currentIndex++;
         }
         else{
             states.remove(0);
             states.add(memento);
         }
-        currentIndex++;
     }
     
     public TextMemento getCurrentMemento() {           

@@ -11,18 +11,24 @@ import java.io.PrintWriter;
  *
  * @author Angelo PC
  */
-public class XMLStrategy implements IStrategy{
+public class TXTTabStrategy implements IStrategy{
 
     @Override
     public String readFile(String file) {
-        return file.replace("<TEXTO>", "").replace("</TEXTO>", "");
+        return file.replace("\t", "");
     }
 
     @Override
     public void processText(String text, String fileName) {
-        text = "<TEXTO>" + text + "</TEXTO>";
+        String buildString = "";
         try (PrintWriter out = new PrintWriter(fileName)) {
-            out.println(text);
+            for (int i = 0; i < text.length(); i++) {
+                buildString += text.charAt(i);
+                if((i+1) % 10 == 0){
+                    buildString += "\t";
+                }
+            }
+            out.println(buildString);
         }
         catch(Exception e){
         }

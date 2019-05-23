@@ -11,6 +11,7 @@ package Model;
  */
 public class Text implements Cloneable{
     private String state;
+    private String displayState;
     
     public Text(String text){
         this.state = text;

@@ -11,6 +11,7 @@ import Model.PDFTextProcessor;
 import Model.Text;
 import Model.TextCareTaker;
 import Model.TextMemento;
+import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
@@ -23,22 +24,32 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultHighlighter;
+import javax.swing.text.Document;
+import javax.swing.text.Highlighter;
+import javax.swing.text.JTextComponent;
 
 /**
  *
  * @author jose pablo
  */
-public class MainWindowController implements KeyListener, ActionListener{
+public class MainWindowController implements KeyListener, ActionListener, MouseListener{
 
     private MainWindow view;
     private FormatProvider formatProvider;
@@ -48,7 +59,8 @@ public class MainWindowController implements KeyListener, ActionListener{
     private String tmpString;
     private Clipboard c;
     private StringSelection testData;
-
+    private DefaultHighlighter.DefaultHighlightPainter highlighter = new DefaultHighlighter.DefaultHighlightPainter(Color.RED);
+    private ArrayList<String> highlightWords;
     public MainWindowController() {
         caretaker = new TextCareTaker();
         generalText = new Text("");
@@ -68,8 +80,13 @@ public class MainWindowController implements KeyListener, ActionListener{
         view.cutButton.addActionListener(this);
         view.pasteButton.addActionListener(this);
         view.TextArea.addMouseListener(this);
+        view.TextArea.setContentType("text/html");
+        view.TextArea.setText("<!DOCTYPE html>" +
+            "<html>" +
+            "</html>");
         this.formatProvider = new FormatProvider();
         this.path = "";
+        this.highlightWords = new ArrayList<>();
     }
     public static String readFile(String path, Charset encoding)
     throws IOException
@@ -80,9 +97,9 @@ public class MainWindowController implements KeyListener, ActionListener{
     private void openFile(){
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
             String str = "";
-            jfc.setDialogTitle("Select an image");
+            jfc.setDialogTitle("Select a document");
             jfc.setAcceptAllFileFilterUsed(false);
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("txt,xml,xsv,json", "txt", "xml","csv", "json");
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("txt,txtt,xml,csv,json", "txt", "txtt", "xml", "csv", "json");
             jfc.addChoosableFileFilter(filter);
             int returnValue = jfc.showOpenDialog(null);
             if (returnValue == JFileChooser.APPROVE_OPTION) {
@@ -98,6 +115,34 @@ public class MainWindowController implements KeyListener, ActionListener{
             }
 		}
     }
+    private void saveFileAs(){
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Save to file");
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("txt,txtt,xml,csv,json", "txt", "txtt", "xml", "csv", "json");
+        fileChooser.addChoosableFileFilter(filter);
+        if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+            this.path = fileChooser.getSelectedFile().getPath();
+            String[] strArray = path.split("\\.");
+            String extension =  strArray[strArray.length - 1];
+            formatProvider.setFormatStrategy(extension);
+            this.formatProvider.processText(view.TextArea.getText(), path);
+        }
+    }
+    
+    private void saveFile(){
+        if(path == null || path.isEmpty()){
+            saveFileAs();
+            return;
+        }
+        String[] strArray = path.split("\\.");
+        String extension =  strArray[strArray.length - 1];
+        formatProvider.setFormatStrategy(extension);
+        this.formatProvider.processText(view.TextArea.getText(), path);
+        JOptionPane.showMessageDialog(this.view, "El archivo ha sido guardado");
+
+    }
+    
     @Override
     public void mousePressed(MouseEvent e) {
     }
@@ -148,13 +193,34 @@ public class MainWindowController implements KeyListener, ActionListener{
                break;
            case "Save":
                System.out.println("Save");
+               saveFile();
                break;
            case "Save as":
                System.out.println("Save as");
-
+               saveFileAs();
                break;
            case "Highlight":
                System.out.println("Highlight");
+               testData = new StringSelection( view.TextArea.getSelectedText() );
+               c.setContents(testData, testData);
+               view.TextArea.replaceSelection("");
+               Transferable t1 = c.getContents( null );
+               try{
+                   if ( t1.isDataFlavorSupported(DataFlavor.stringFlavor) ){
+                         Object o = t1.getTransferData( DataFlavor.stringFlavor );
+                         String data = (String)t1.getTransferData( DataFlavor.stringFlavor );
+                         if(data == null)
+                             break;
+                         view.TextArea.replaceSelection("<font color=\"red\">"+ data +"</font>");
+                         String txtArea = view.TextArea.getText();
+                         txtArea = txtArea.replace("&gt;", ">").replace("&lt;", "<").replace("&quot;", "\"");
+                         view.TextArea.setText(txtArea);
+
+                     }
+               }
+               catch(UnsupportedFlavorException | IOException f){
+                   System.out.println(f.getMessage());
+               } 
                break;
            case "Undo":
                System.out.println("Undo");
@@ -163,7 +229,7 @@ public class MainWindowController implements KeyListener, ActionListener{
                    JOptionPane.showMessageDialog(view, "You can't undo more");
                else{
                    generalText.restoreMemento(previousMemento);
-                   view.TextArea.setText(generalText.getState());
+                   view.TextArea.setText(generalText.getState().replace("&gt;", ">").replace("&lt;", "<").replace("&quot;", "\""));
                }
                break;
            case "Redo":
@@ -173,7 +239,7 @@ public class MainWindowController implements KeyListener, ActionListener{
                    JOptionPane.showMessageDialog(view, "You can't redo more");
                else{
                    generalText.restoreMemento(nextMemento);
-                   view.TextArea.setText(generalText.getState());
+                   view.TextArea.setText(generalText.getState().replace("&gt;", ">").replace("&lt;", "<").replace("&quot;", "\""));
                }
                break;
            case "Copy":

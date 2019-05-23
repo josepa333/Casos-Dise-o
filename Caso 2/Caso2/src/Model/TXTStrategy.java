@@ -5,6 +5,8 @@
  */
 package Model;
 
+import java.io.PrintWriter;
+
 /**
  *
  * @author Angelo PC
@@ -12,12 +14,16 @@ package Model;
 public class TXTStrategy implements IStrategy{
 
     @Override
-    public void processText(String text) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public String readFile(String file) {
+        return file;
     }
 
     @Override
-    public String readFile(String file) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void processText(String text, String fileName) {
+        try (PrintWriter out = new PrintWriter(fileName)) {
+            out.println(text);
+        }
+        catch(Exception e){
+        }
     }
 }
